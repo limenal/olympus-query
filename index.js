@@ -1,24 +1,25 @@
 // const axios = require('axios')
 
-import {getStakesInfo} from './stakes.js'
+import {getStakesInfoDays, getStakesInfoHour, getStakesInfoMinute} from './stakes.js'
 
-import {getDepositsInfo} from './deposits.js'
+import {getDepositsInfoDays, getDepositsInfoHours, getDepositsInfoMinutes} from './deposits.js'
 
 async function main()
 {
     // const stakeData = await getStakesInfo(1632268840, 3600, 24)
-    const depositData = await getDepositsInfo(1632268840, 3600, 24)
-    if(!!depositData)
+    // const depositData = 
+    const depositMinute = await getStakesInfoMinute(1632232988, 10)
+    console.log(depositMinute.length)
+    if(!!depositMinute)
     {
-        for(let i = 0; i < depositData.length-1; ++i)
+        for(let i = 0; i < depositMinute.length; ++i)
         {
-            if(depositData[i].depositCount != 0)
+            if(depositMinute[i].unstakedToStakedPercent > 100)
             {
-                console.log(depositData[i])
+                console.log(depositMinute[i])
             }
         }
     }
-    console.log(depositData.length)
 }
 
 main()

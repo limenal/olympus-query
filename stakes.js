@@ -1,128 +1,271 @@
 import axios from 'axios'
-export async function getStakesInfo(timestamp_start, delta_per_period, number_of_periods)
+export async function getStakesInfoDays(startTimestamp, days)
 {
     
-    let timestamps = []
-    for (let i = 0; i < number_of_periods; ++i)
+    let stakeQuery = `
+
     {
-        timestamps.push(
-            (timestamp_start + i * delta_per_period)
-        )
-    }
-    let stakeQuery = '{'
-    for (let i = 0; i < timestamps.length - 1; ++i)
-    {
-        stakeQuery += `
-            t${timestamps[i]}:stakes(first: 1, orderBy: timestamp, where:{timestamp_gte: ${timestamps[i]}, timestamp_lt: ${timestamps[i+1]}}) {
-                id
-                totalStaked
-                currentStaked
-                stakeCount
-                amount
-                timestamp
-            }
-        `
-    }
-
-    stakeQuery += '}'
-    
-    let unstakeQuery = '{'
-    for (let i = 0; i < timestamps.length - 1; ++i)
-    {
-        unstakeQuery += `
-            t${timestamps[i]}:unstakes(first: 1, orderBy: timestamp, where:{timestamp_gte: ${timestamps[i]}, timestamp_lt: ${timestamps[i+1]}}) {
-                id
-                totalUnstaked
-                currentStaked
-                unstakeCount
-                amount
-                timestamp
-            }
-        `
-    }
-    unstakeQuery+= '}'
-
-    try{
-        const stakeData = await axios({
-            url: 'https://api.thegraph.com/subgraphs/name/limenal/olympus-stake',
-            method: 'post',
-            data: {
-              query: stakeQuery
-            }
-          })
-        const unstakeData = await axios({
-            url: 'https://api.thegraph.com/subgraphs/name/limenal/olympus-stake',
-            method: 'post',
-            data: {
-              query: unstakeQuery
-            }
-          })
-        let data = []
-        for(let i = 0; i < timestamps.length - 1; ++i)
-        {
-            let staked, unstaked, stakeCount, unstakeCount, currentStaked
-            let obj = {}
-            obj.timestampBegin = timestamps[i]
-            obj.timestampEnd = timestamps[i+1]
-            obj.interval = delta_per_period
-            let s1 = stakeData.data.data['t'+ timestamps[i].toString()]
-            let s2 = stakeData.data.data['t'+ timestamps[i+1].toString()]
-            if(!!s1 && !!s2)
-            {
-                if(s1.length != 0 && s2.length != 0)
-                {
-                    // Сумма стейков за последний интервал
-                    staked = Number(s2[0].totalStaked) - Number(s1[0].totalStaked)
-                    obj.staked = staked
-                    stakeCount = Number(s2[0].stakeCount) - Number(s1[0].stakeCount)
-                    currentStaked = Number(s2[0].currentStaked)
-                    obj.currentStaked = currentStaked
-                    obj.stakeCount = stakeCount
-                }   
-                
-            }
-            else{
-                obj.staked = 0
-                obj.stakeCount = 0
-
-            }
-
-            let u1 = unstakeData.data.data['t'+ timestamps[i].toString()]
-            let u2 = unstakeData.data.data['t'+ timestamps[i+1].toString()]    
-            if(!!u1 && !!u2)
-            {
-                if(u1.length != 0 && u2.length != 0)
-                {
-                    // Сумма анстейков за последний интервал
-                    unstaked = Number(u2[0].totalUnstaked) - Number(u1[0].totalUnstaked)
-                    obj.unstaked = unstaked
-                    unstakeCount = Number(u2[0].unstakeCount) - Number(u1[0].unstakeCount)
-                    obj.unstakeCount = unstakeCount
-                }
-                
-            }
-            else{
-                obj.unstaked = 0
-                obj.unstakeCount = 0
-            }
-
-            if(staked !== 0)
-            {
-                // console.log(unstaked, staked)
-                obj.unstakedToStakedPercent = 100 * (obj.unstaked / obj.staked)
-            }
-            if(currentStaked !== 0)
-            {
-                obj.unstakedToTotalStakedPercent = 100 * (obj.unstaked / obj.currentStaked)
-            }
-            data.push(obj)
+        stakeYears(first: 100 orderBy:timestamp) {
+      
+          dayStake(first: 365 orderBy:timestamp) {
+      
+            id
+            amountStaked
+            amountUnstaked
+            currentStaked
+            timestamp
+            stakeCount
+            unstakeCount
+          }
         }
-        return data
+      }
+    `
+
+    try
+    {
+      const stakeData = await axios({
+          url: 'https://api.thegraph.com/subgraphs/id/QmRFvzVecXgaTGszmpFnv2Df3VCKc5D514SLCBAT1Zs3Wk',
+          method: 'post',
+          data: {
+            query: stakeQuery
+          }
+      }) 
+      const stakesData = stakeData.data.data.stakeYears
+      let data = []
+      let stakes = []
+      for(let i = 0; i < stakesData[0].dayStake.length; ++i)
+      {
+        let obj = {}
+        obj.stakeCount = stakesData[0].dayStake[i].stakeCount
+        obj.unstakeCount = stakesData[0].dayStake[i].unstakeCount
+        obj.amountStaked = stakesData[0].dayStake[i].amountStaked
+        obj.amountUnstaked = stakesData[0].dayStake[i].amountUnstaked
+        obj.timestamp = stakesData[0].dayStake[i].timestamp
+        obj.currentStaked = stakesData[0].dayStake[i].currentStaked
+        stakes.push(obj)
+      }
+      for(let i = 0; i < days-1; ++i)
+      {
+        let beginTimestamp = startTimestamp + i * 86400
+        let endTimestamp = startTimestamp + (i+1) * 86400
+
+        let obj = {
+          beginTimestamp: beginTimestamp,
+          endTimestamp: endTimestamp,
+          stakeCount: 0,
+          unstakeCount: 0,
+          amountStaked: 0,
+          amountUnstaked: 0,
+          currentStaked: 0,
+          unstakedToStakedPercent: 0,
+          unstakedToTotalStakedPercent: 0
+        }
+        for(let j = 0; j < stakes.length; ++j)
+        {
+          
+          if(beginTimestamp <= stakes[j].timestamp && stakes[j].timestamp < endTimestamp)
+          {
+            obj.stakeCount = stakes[j].stakeCount
+            obj.unstakeCount = stakes[j].unstakeCount
+            obj.amountStaked = stakes[j].amountStaked
+            obj.amountUnstaked = stakes[j].amountUnstaked
+            obj.currentStaked = stakes[j].currentStaked
+            obj.unstakedToStakedPercent = 100 * (stakes[j].amountUnstaked/stakes[j].amountStaked)
+            obj.unstakedToTotalStakedPercent = 100 * (stakes[j].amountUnstaked / stakes[j].currentStaked)
+          }
+        }
+        data.push(obj)
+      }
+      return data
     }
     catch(err)
     {
         console.log(err)
     }
+}
+
+export async function getStakesInfoHour(startTimestamp, days)
+{
+  let stakeQuery = `
+
+  {
+      stakeYears(first: 100 orderBy:timestamp) {
+    
+        dayStake(first: 365 orderBy:timestamp) {
+          hourStake(first: 24, orderBy:timestamp)
+          {
+            id
+            amountStaked
+            amountUnstaked
+            currentStaked
+            timestamp
+            stakeCount
+            unstakeCount
+          }
+          
+        }
+      }
+    }
+  `
+
+  try
+  {
+    const stakeData = await axios({
+        url: 'https://api.thegraph.com/subgraphs/id/QmRFvzVecXgaTGszmpFnv2Df3VCKc5D514SLCBAT1Zs3Wk',
+        method: 'post',
+        data: {
+          query: stakeQuery
+        }
+    }) 
+    const stakesData = stakeData.data.data.stakeYears
+    let data = []
+    let stakes = []
+    for(let i = 0; i < stakesData[0].dayStake.length; ++i)
+    {
+      for(let j = 0; j < stakesData[0].dayStake[i].hourStake.length; ++j)
+      {
+        let obj = {}
+        obj.stakeCount = stakesData[0].dayStake[i].hourStake[j].stakeCount
+        obj.unstakeCount = stakesData[0].dayStake[i].hourStake[j].unstakeCount
+        obj.amountStaked = stakesData[0].dayStake[i].hourStake[j].amountStaked
+        obj.amountUnstaked = stakesData[0].dayStake[i].hourStake[j].amountUnstaked
+        obj.timestamp = stakesData[0].dayStake[i].hourStake[j].timestamp
+        obj.currentStaked = stakesData[0].dayStake[i].hourStake[j].currentStaked
+        stakes.push(obj)
+      }
+    }
+    for(let i = 0; i < 24*days; ++i)
+    {
+      let beginTimestamp = startTimestamp + i * 3600
+      let endTimestamp = startTimestamp + (i+1) * 3600
+
+      let obj = {
+        beginTimestamp: beginTimestamp,
+        endTimestamp: endTimestamp,
+        stakeCount: 0,
+        unstakeCount: 0,
+        amountStaked: 0,
+        amountUnstaked: 0,
+        currentStaked: 0,
+        unstakedToStakedPercent: 0,
+        unstakedToTotalStakedPercent: 0
+      }
+      for(let j = 0; j < stakes.length; ++j)
+      {
+        
+        if(beginTimestamp <= stakes[j].timestamp && stakes[j].timestamp < endTimestamp)
+        {
+          obj.stakeCount = stakes[j].stakeCount
+          obj.unstakeCount = stakes[j].unstakeCount
+          obj.amountStaked = stakes[j].amountStaked
+          obj.amountUnstaked = stakes[j].amountUnstaked
+          obj.currentStaked = stakes[j].currentStaked
+          obj.unstakedToStakedPercent = 100 * (stakes[j].amountUnstaked/stakes[j].amountStaked)
+          obj.unstakedToTotalStakedPercent = 100 * (stakes[j].amountUnstaked / stakes[j].currentStaked)
+        }
+      }
+      data.push(obj)
+    }
+    return data
+  }
+  catch(err)
+  {
+      console.log(err)
+  }
     
 }
 
+export async function getStakesInfoMinute(startTimestamp, days)
+{
+  let stakeQuery = `
+
+  {
+      stakeYears(first: 100 orderBy:timestamp) {
+    
+        dayStake(first: 365 orderBy:timestamp) {
+          hourStake(first: 24, orderBy:timestamp)
+          {
+            minuteStake(first:60 orderBy:timestamp)
+            {
+              id
+              amountStaked
+              amountUnstaked
+              currentStaked
+              timestamp
+              stakeCount
+              unstakeCount
+            }
+          }
+          
+        }
+      }
+    }
+  `
+
+  try
+  {
+    const stakeData = await axios({
+      url: 'https://api.thegraph.com/subgraphs/id/QmRFvzVecXgaTGszmpFnv2Df3VCKc5D514SLCBAT1Zs3Wk',
+      method: 'post',
+      data: {
+        query: stakeQuery
+      }
+    }) 
+    const stakesData = stakeData.data.data.stakeYears
+    let data = []
+    let stakes = []
+    for(let i = 0; i < stakesData[0].dayStake.length; ++i)
+    {
+      for(let j = 0; j < stakesData[0].dayStake[i].hourStake.length; ++j)
+      {
+        for(let c = 0; c < stakesData[0].dayStake[i].hourStake[j].minuteStake.length; ++c)
+        {
+          let obj = {}
+          obj.stakeCount = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].stakeCount
+          obj.unstakeCount = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].unstakeCount
+          obj.amountStaked = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].amountStaked
+          obj.amountUnstaked = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].amountUnstaked
+          obj.timestamp = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].timestamp
+          obj.currentStaked = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].currentStaked
+          stakes.push(obj)
+        }
+      }
+    }
+    for(let i = 0; i < 60*24*days; ++i)
+    {
+      let beginTimestamp = startTimestamp + i * 60
+      let endTimestamp = startTimestamp + (i+1) * 60
+      let obj = {
+        beginTimestamp: beginTimestamp,
+        endTimestamp: endTimestamp,
+        stakeCount: 0,
+        unstakeCount: 0,
+        amountStaked: 0,
+        amountUnstaked: 0,
+        currentStaked: 0,
+        unstakedToStakedPercent: 0,
+        unstakedToTotalStakedPercent: 0
+      }
+      for(let j = 0; j < stakes.length; ++j)
+      {
+        if(beginTimestamp <= stakes[j].timestamp && stakes[j].timestamp < endTimestamp)
+        {
+          obj.stakeCount = stakes[j].stakeCount
+          obj.unstakeCount = stakes[j].unstakeCount
+          obj.amountStaked = stakes[j].amountStaked
+          obj.amountUnstaked = stakes[j].amountUnstaked
+          obj.currentStaked = stakes[j].currentStaked
+          obj.unstakedToStakedPercent = 100 * (stakes[j].amountUnstaked/stakes[j].amountStaked)
+          obj.unstakedToTotalStakedPercent = 100 * (stakes[j].amountUnstaked / stakes[j].currentStaked)
+        }
+      }
+      data.push(obj)
+    }
+    return data
+  }
+  catch(err)
+  {
+    console.log(err)
+  }
+    
+}
