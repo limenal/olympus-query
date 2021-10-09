@@ -8,18 +8,19 @@ async function main()
 {
     // const stakeData = await getStakesInfo(1632268840, 3600, 24)
     // const depositData = 
-    const depositMinute = await getStakesInfoMinute(1632232988, 10)
+    const depositMinute = await getStakesInfoDays(1615232988, 365)
     console.log(depositMinute.length)
-    if(!!depositMinute)
-    {
+    // if(!!depositMinute)
+    // {
         for(let i = 0; i < depositMinute.length; ++i)
         {
-            if(depositMinute[i].unstakedToStakedPercent > 100)
-            {
+            
                 console.log(depositMinute[i])
-            }
+
+            
+            
         }
-    }
+    // }
 }
 
 main()

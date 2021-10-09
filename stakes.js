@@ -24,7 +24,7 @@ export async function getStakesInfoDays(startTimestamp, days)
     try
     {
       const stakeData = await axios({
-          url: 'https://api.thegraph.com/subgraphs/id/QmRFvzVecXgaTGszmpFnv2Df3VCKc5D514SLCBAT1Zs3Wk',
+          url: 'https://api.thegraph.com/subgraphs/name/limenal/olympus-stake',
           method: 'post',
           data: {
             query: stakeQuery
@@ -111,7 +111,7 @@ export async function getStakesInfoHour(startTimestamp, days)
   try
   {
     const stakeData = await axios({
-        url: 'https://api.thegraph.com/subgraphs/id/QmRFvzVecXgaTGszmpFnv2Df3VCKc5D514SLCBAT1Zs3Wk',
+        url: 'https://api.thegraph.com/subgraphs/name/limenal/olympus-stake',
         method: 'post',
         data: {
           query: stakeQuery
@@ -205,7 +205,7 @@ export async function getStakesInfoMinute(startTimestamp, days)
   try
   {
     const stakeData = await axios({
-      url: 'https://api.thegraph.com/subgraphs/id/QmRFvzVecXgaTGszmpFnv2Df3VCKc5D514SLCBAT1Zs3Wk',
+      url: 'https://api.thegraph.com/subgraphs/name/limenal/olympus-stake',
       method: 'post',
       data: {
         query: stakeQuery
@@ -255,6 +255,7 @@ export async function getStakesInfoMinute(startTimestamp, days)
           obj.amountStaked = stakes[j].amountStaked
           obj.amountUnstaked = stakes[j].amountUnstaked
           obj.currentStaked = stakes[j].currentStaked
+          obj.timestamp = stakes[j].timestamp
           obj.unstakedToStakedPercent = 100 * (stakes[j].amountUnstaked/stakes[j].amountStaked)
           obj.unstakedToTotalStakedPercent = 100 * (stakes[j].amountUnstaked / stakes[j].currentStaked)
         }
