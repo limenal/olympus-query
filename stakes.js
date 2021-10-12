@@ -1,4 +1,10 @@
 import axios from 'axios'
+
+/**
+
+    * @dev : Get stakes (days)
+
+*/
 export async function getStakesInfoDays(startTimestamp, days)
 {
     
@@ -83,7 +89,11 @@ export async function getStakesInfoDays(startTimestamp, days)
         console.log(err)
     }
 }
+/**
 
+    * @dev : Get stakes (hours)
+
+*/
 export async function getStakesInfoHour(startTimestamp, days)
 {
   let stakeQuery = `
@@ -174,7 +184,11 @@ export async function getStakesInfoHour(startTimestamp, days)
   }
     
 }
+/**
 
+    * @dev : Get stakes (minutes)
+
+*/
 export async function getStakesInfoMinute(startTimestamp, days)
 {
   let stakeQuery = `

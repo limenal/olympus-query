@@ -1,5 +1,9 @@
 import axios from 'axios'
+/**
 
+    * @dev : Get deposits (days)
+
+*/
 export async function getDepositsInfoDays(startTimestamp, days)
 {
     let depositQuery = `
@@ -173,7 +177,11 @@ export async function getDepositsInfoDays(startTimestamp, days)
     }
 
 }
+/**
 
+    * @dev : Get deposits (hours)
+
+*/
 export async function getDepositsInfoHours(startTimestamp, days)
 {
     let depositQuery = `
@@ -437,7 +445,11 @@ export async function getDepositsInfoHours(startTimestamp, days)
         console.log(err)
     }
 }
+/**
 
+    * @dev : Get deposits (minutes)
+
+*/
 export async function getDepositsInfoMinutes(startTimestamp, days)
 {
     let depositQueryDai = `
