@@ -742,12 +742,12 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
             let beginTimestamp = startTimestamp + i * 60
             let endTimestamp = startTimestamp + (i+1) * 60
             let obj = {
-                amountDaiHour: 0,
-                amountEthHour: 0,
-                amountFraxHour: 0,
-                amountLusdHour: 0,
-                amountOhmDaiHour: 0,
-                amountOhmFraxHour: 0,
+                amountDaiMinute: 0,
+                amountEthMinute: 0,
+                amountFraxMinute: 0,
+                amountLusdMinute: 0,
+                amountOhmDaiMinute: 0,
+                amountOhmFraxMinute: 0,
                 depositCountDai: 0,
                 depositCountEth: 0,
                 depositCountLusd: 0,
