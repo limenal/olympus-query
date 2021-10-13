@@ -8,13 +8,13 @@ async function main()
 {
     // const stakeData = await getStakesInfo(1632268840, 3600, 24)
     // const depositData = 
-    const deposit = await getStakesInfoHour(1615232988, 365)
+    const deposit = await getDepositsInfoDays(1615232988, 365)
     console.log(deposit.length)
     // if(!!depositMinute)
     // {
         for(let i = 0; i < deposit.length; ++i)
         {
-            if(deposit[i].stakeCount > 0)
+            if(deposit[i].depositCountDai > 0)
             {
                 console.log(deposit[i])
 

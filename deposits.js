@@ -109,24 +109,24 @@ export async function getDepositsInfoDays(startTimestamp, days)
             let beginTimestamp = startTimestamp + i * 86400
             let endTimestamp = startTimestamp + (i+1) * 86400
             let obj = {
-                amountDaiDay: 0,
-                amountEthDay: 0,
-                amountFraxDay: 0,
-                amountLusdDay: 0,
-                amountOhmDaiDay: 0,
-                amountOhmFraxDay: 0,
+                amountDai: 0,
+                amountEth: 0,
+                amountFrax: 0,
+                amountLusd: 0,
+                amountOhmDai: 0,
+                amountOhmFrax: 0,
                 amountDaiAvg: 0,
                 amountEthAvg: 0,
                 amountLusdAvg: 0,
                 amountFraxAvg: 0,
                 amountOhmDaiAvg: 0,
                 amountOhmFraxAvg:0,
-                payoutDaiDay: 0,
-                payoutEthDay: 0,
-                payoutFraxDay: 0,
-                payoutLusdDay: 0,
-                payoutOhmDaiDay: 0,
-                payoutOhmFraxDay: 0,
+                payoutDai: 0,
+                payoutEth: 0,
+                payoutFrax: 0,
+                payoutLusd: 0,
+                payoutOhmDai: 0,
+                payoutOhmFrax: 0,
                 depositCountDai: 0,
                 depositCountEth: 0,
                 depositCountLusd: 0,
@@ -148,10 +148,10 @@ export async function getDepositsInfoDays(startTimestamp, days)
                 {
                     if(beginTimestamp <= daiDeposits[0].dayDeposit[j].timestamp && daiDeposits[0].dayDeposit[j].timestamp < endTimestamp )
                     {
-                        obj.amountDaiDay = daiDeposits[0].dayDeposit[j].amount
+                        obj.amountDai = daiDeposits[0].dayDeposit[j].amount
                         obj.depositCountDai = daiDeposits[0].dayDeposit[j].depositCount
                         obj.redeemCountDai = daiDeposits[0].dayDeposit[j].redeemCount
-                        obj.payoutDaiDay = daiDeposits[0].dayDeposit[j].payout
+                        obj.payoutDai = daiDeposits[0].dayDeposit[j].payout
                         if(daiDeposits[0].dayDeposit[j].depositCount != 0)
                         {
                             obj.amountDaiAvg = daiDeposits[0].dayDeposit[j].amount/ daiDeposits[0].dayDeposit[j].depositCount
@@ -167,10 +167,10 @@ export async function getDepositsInfoDays(startTimestamp, days)
                 {
                     if(beginTimestamp <= ethDeposits[0].dayDeposit[j].timestamp && ethDeposits[0].dayDeposit[j].timestamp < endTimestamp )
                     {
-                        obj.amountEthDay = ethDeposits[0].dayDeposit[j].amount
+                        obj.amountEth = ethDeposits[0].dayDeposit[j].amount
                         obj.depositCountEth = ethDeposits[0].dayDeposit[j].depositCount
                         obj.redeemCountEth = ethDeposits[0].dayDeposit[j].redeemCount
-                        obj.payoutEthDay = ethDeposits[0].dayDeposit[j].payout
+                        obj.payoutEth = ethDeposits[0].dayDeposit[j].payout
                         if(ethDeposits[0].dayDeposit[j].depositCount != 0)
                         {
                             obj.amountEthAvg = ethDeposits[0].dayDeposit[j].amount/ ethDeposits[0].dayDeposit[j].depositCount
@@ -185,10 +185,10 @@ export async function getDepositsInfoDays(startTimestamp, days)
                 {
                     if(beginTimestamp <= fraxDeposits[0].dayDeposit[j].timestamp && fraxDeposits[0].dayDeposit[j].timestamp < endTimestamp )
                     {
-                        obj.amountFraxDay = fraxDeposits[0].dayDeposit[j].amount
+                        obj.amountFrax = fraxDeposits[0].dayDeposit[j].amount
                         obj.depositCountFrax = fraxDeposits[0].dayDeposit[j].depositCount
                         obj.redeemCountFrax = fraxDeposits[0].dayDeposit[j].redeemCount
-                        obj.payoutFraxDay = fraxDeposits[0].dayDeposit[j].payout
+                        obj.payoutFrax = fraxDeposits[0].dayDeposit[j].payout
                         if(fraxDeposits[0].dayDeposit[j].depositCount != 0)
                         {
                             obj.amountFraxAvg = fraxDeposits[0].dayDeposit[j].amount/ fraxDeposits[0].dayDeposit[j].depositCount
@@ -203,10 +203,10 @@ export async function getDepositsInfoDays(startTimestamp, days)
                 {
                     if(beginTimestamp <= lusdDeposits[0].dayDeposit[j].timestamp && lusdDeposits[0].dayDeposit[j].timestamp < endTimestamp )
                     {
-                        obj.amountLusdDay = lusdDeposits[0].dayDeposit[j].amount
+                        obj.amountLusd = lusdDeposits[0].dayDeposit[j].amount
                         obj.depositCountLusd = lusdDeposits[0].dayDeposit[j].depositCount
                         obj.redeemCountLusd = lusdDeposits[0].dayDeposit[j].redeemCount
-                        obj.payoutLusdDay = lusdDeposits[0].dayDeposit[j].payout
+                        obj.payoutLusd = lusdDeposits[0].dayDeposit[j].payout
                         if(lusdDeposits[0].dayDeposit[j].depositCount != 0)
                         {
                             obj.amountLusdAvg = lusdDeposits[0].dayDeposit[j].amount/ lusdDeposits[0].dayDeposit[j].depositCount
@@ -221,10 +221,10 @@ export async function getDepositsInfoDays(startTimestamp, days)
                 {
                     if(beginTimestamp <= ohmDaiDeposits[0].dayDeposit[j].timestamp && ohmDaiDeposits[0].dayDeposit[j].timestamp < endTimestamp )
                     {
-                        obj.amountOhmdaiDay = ohmDaiDeposits[0].dayDeposit[j].amount
+                        obj.amountOhmDai = ohmDaiDeposits[0].dayDeposit[j].amount
                         obj.depositCountOhmDai = ohmDaiDeposits[0].dayDeposit[j].depositCount
                         obj.redeemCountOhmDai = ohmDaiDeposits[0].dayDeposit[j].redeemCount
-                        obj.payoutOhmDaiDay = ohmDaiDeposits[0].dayDeposit[j].payout
+                        obj.payoutOhmDai = ohmDaiDeposits[0].dayDeposit[j].payout
                         if(ohmDaiDeposits[0].dayDeposit[j].depositCount != 0)
                         {
                             obj.amountOhmDaidAvg = ohmDaiDeposits[0].dayDeposit[j].amount/ ohmDaiDeposits[0].dayDeposit[j].depositCount
@@ -239,10 +239,10 @@ export async function getDepositsInfoDays(startTimestamp, days)
                 {
                     if(beginTimestamp <= ohmFraxDeposits[0].dayDeposit[j].timestamp && ohmFraxDeposits[0].dayDeposit[j].timestamp < endTimestamp )
                     {
-                        obj.amountOhmFraxDay = ohmFraxDeposits[0].dayDeposit[j].amount
+                        obj.amountOhmFrax = ohmFraxDeposits[0].dayDeposit[j].amount
                         obj.depositCountOhmFrax = ohmFraxDeposits[0].dayDeposit[j].depositCount
                         obj.redeemCountOhmFrax = ohmFraxDeposits[0].dayDeposit[j].redeemCount
-                        obj.payoutOhmFraxDay = ohmFraxDeposits[0].dayDeposit[j].payout
+                        obj.payoutOhmFrax = ohmFraxDeposits[0].dayDeposit[j].payout
                         if(ohmFraxDeposits[0].dayDeposit[j].depositCount != 0)
                         {
                             obj.amountOhmFraxAvg = ohmFraxDeposits[0].dayDeposit[j].amount/ ohmFraxDeposits[0].dayDeposit[j].depositCount
@@ -391,8 +391,8 @@ export async function getDepositsInfoHours(startTimestamp, days)
                 for(let k = 0; k < daiDeposits[0].dayDeposit[i].hourDeposit.length; ++k)
                 {
                     let obj = {}
-                    obj.amountDaiHour = daiDeposits[0].dayDeposit[i].hourDeposit[k].amount
-                    obj.payoutDaiHour = daiDeposits[0].dayDeposit[i].hourDeposit[k].payout
+                    obj.amountDai = daiDeposits[0].dayDeposit[i].hourDeposit[k].amount
+                    obj.payoutDai = daiDeposits[0].dayDeposit[i].hourDeposit[k].payout
                     obj.depositCountDai = daiDeposits[0].dayDeposit[i].hourDeposit[k].depositCount
                     obj.redeemCountDai = daiDeposits[0].dayDeposit[i].hourDeposit[k].redeemCount
                     obj.timestamp = daiDeposits[0].dayDeposit[i].hourDeposit[k].timestamp
@@ -409,8 +409,8 @@ export async function getDepositsInfoHours(startTimestamp, days)
                 for(let k = 0; k < ethDeposits[0].dayDeposit[i].hourDeposit.length; ++k)
                 {
                     let obj = {}
-                    obj.amountEthHour = ethDeposits[0].dayDeposit[i].hourDeposit[k].amount
-                    obj.payoutEthHour = ethDeposits[0].dayDeposit[i].hourDeposit[k].payout
+                    obj.amountEth = ethDeposits[0].dayDeposit[i].hourDeposit[k].amount
+                    obj.payoutEth = ethDeposits[0].dayDeposit[i].hourDeposit[k].payout
                     obj.depositCountEth = ethDeposits[0].dayDeposit[i].hourDeposit[k].depositCount
                     obj.redeemCountEth = ethDeposits[0].dayDeposit[i].hourDeposit[k].redeemCount
                     obj.timestamp = ethDeposits[0].dayDeposit[i].hourDeposit[k].timestamp
@@ -427,8 +427,8 @@ export async function getDepositsInfoHours(startTimestamp, days)
                 for(let k = 0; k < fraxDeposits[0].dayDeposit[i].hourDeposit.length; ++k)
                 {
                     let obj = {}
-                    obj.amountFraxHour = fraxDeposits[0].dayDeposit[i].hourDeposit[k].amount
-                    obj.payoutFraxHour = fraxDeposits[0].dayDeposit[i].hourDeposit[k].payout
+                    obj.amountFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[k].amount
+                    obj.payoutFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[k].payout
                     obj.depositCountFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[k].depositCount
                     obj.redeemCountFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[k].redeemCount
                     obj.timestamp = fraxDeposits[0].dayDeposit[i].hourDeposit[k].timestamp
@@ -445,8 +445,8 @@ export async function getDepositsInfoHours(startTimestamp, days)
                 for(let k = 0; k < lusdDeposits[0].dayDeposit[i].hourDeposit.length; ++k)
                 {
                     let obj = {}
-                    obj.amountLusdHour = lusdDeposits[0].dayDeposit[i].hourDeposit[k].amount
-                    obj.payoutLusdHour = lusdDeposits[0].dayDeposit[i].hourDeposit[k].payout
+                    obj.amountLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[k].amount
+                    obj.payoutLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[k].payout
                     obj.depositCountLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[k].depositCount
                     obj.redeemCountLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[k].redeemCount
                     obj.timestamp = lusdDeposits[0].dayDeposit[i].hourDeposit[k].timestamp
@@ -463,8 +463,8 @@ export async function getDepositsInfoHours(startTimestamp, days)
                 for(let k = 0; k < ohmDaiDeposits[0].dayDeposit[i].hourDeposit.length; ++k)
                 {
                     let obj = {}
-                    obj.amountOhmDaiHour = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[k].amount
-                    obj.payoutOhmDaiHour = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[k].payout
+                    obj.amountOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[k].amount
+                    obj.payoutOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[k].payout
                     obj.depositCountOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[k].depositCount
                     obj.redeemCountOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[k].redeemCount
                     obj.timestamp = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[k].timestamp
@@ -481,8 +481,8 @@ export async function getDepositsInfoHours(startTimestamp, days)
                 for(let k = 0; k < ohmFraxDeposits[0].dayDeposit[i].hourDeposit.length; ++k)
                 {
                     let obj = {}
-                    obj.amountOhmFraxHour = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[k].amount
-                    obj.payoutOhmFraxHour = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[k].payout
+                    obj.amountOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[k].amount
+                    obj.payoutOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[k].payout
                     obj.depositCountOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[k].depositCount
                     obj.redeemCountOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[k].redeemCount
                     obj.timestamp = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[k].timestamp
@@ -496,22 +496,22 @@ export async function getDepositsInfoHours(startTimestamp, days)
             let beginTimestamp = startTimestamp + i * 3600
             let endTimestamp = startTimestamp + (i+1) * 3600
             let obj = {
-                amountDaiHour: 0,
-                amountEthHour: 0,
-                amountFraxHour: 0,
-                amountLusdHour: 0,
-                amountOhmDaiHour: 0,
-                amountOhmFraxHour: 0,
+                amountDai: 0,
+                amountEth: 0,
+                amountFrax: 0,
+                amountLusd: 0,
+                amountOhmDai: 0,
+                amountOhmFrax: 0,
                 amountDaiAvg: 0,
                 amountEthAvg: 0,
                 amountLusdAvg: 0,
                 amountFraxAvg: 0,
                 amountOhmDaiAvg: 0,
                 amountOhmFraxAvg:0,
-                payoutDaiHour: 0,
-                payoutEthHour: 0,
-                payoutFraxHour: 0,
-                payoutLusdHour: 0,
+                payoutDai: 0,
+                payoutEth: 0,
+                payoutFrax: 0,
+                payoutLusd: 0,
                 payoutOhmDai: 0,
                 payoutOhmFrax: 0,
                 depositCountDai: 0,
@@ -534,10 +534,10 @@ export async function getDepositsInfoHours(startTimestamp, days)
                 if(beginTimestamp <= daiArray[j].timestamp && daiArray[j].timestamp < endTimestamp)
                 {
                     
-                    obj.amountDaiHour = daiArray[j].amountDaiHour
+                    obj.amountDai = daiArray[j].amountDai
                     obj.depositCountDai = daiArray[j].depositCountDai
                     obj.redeemCountDai = daiArray[j].redeemCountDai
-                    obj.payoutDaiHour = daiArray[j].payoutDaiHour
+                    obj.payoutDai = daiArray[j].payoutDai
                 }
 
             }
@@ -546,10 +546,10 @@ export async function getDepositsInfoHours(startTimestamp, days)
                 if(beginTimestamp <= ethArray[j].timestamp && ethArray[j].timestamp < endTimestamp)
                 {
                     
-                    obj.amountEthHour = ethArray[j].amountEthHour
+                    obj.amountEth = ethArray[j].amountEth
                     obj.depositCountEth = ethArray[j].depositCountEth
                     obj.redeemCountEth = daiArray[j].redeemCountEth
-                    obj.payoutEthHour = daiArray[j].payoutEthHour
+                    obj.payoutEth = daiArray[j].payoutEth
 
                 }
 
@@ -558,30 +558,30 @@ export async function getDepositsInfoHours(startTimestamp, days)
             {  
                 if(beginTimestamp <= fraxArray[j].timestamp && fraxArray[j].timestamp < endTimestamp)
                 {
-                    obj.amountFraxHour = fraxArray[j].amountFraxHour
+                    obj.amountFrax = fraxArray[j].amountFrax
                     obj.depositCountFrax = fraxArray[j].depositCountFrax
                     obj.redeemCountFrax = fraxArray[j].redeemCountFrax
-                    obj.payoutFraxHour = fraxArray[j].payoutFraxHour
+                    obj.payoutFrax = fraxArray[j].payoutFrax
                 }
             }
             for(let j = 0; j < lusdArray.length; ++j)
             {  
                 if(beginTimestamp <= lusdArray[j].timestamp && lusdArray[j].timestamp < endTimestamp)
                 {
-                    obj.amountLusdHour = lusdArray[j].amountLusdHour
+                    obj.amountLusd = lusdArray[j].amountLusd
                     obj.depositCountLusd = lusdArray[j].depositCountLusd
                     obj.redeemCountLusd = lusdArray[j].redeemCountLusd
-                    obj.payoutLusdHour = lusdArray[j].payoutLusdHour
+                    obj.payoutLusd = lusdArray[j].payoutLusd
                 }
             }
             for(let j = 0; j < ohmDaiArray.length; ++j)
             {  
                 if(beginTimestamp <= ohmDaiArray[j].timestamp && ohmDaiArray[j].timestamp < endTimestamp)
                 {
-                    obj.amountOhmDaiHour = ohmDaiArray[j].amountOhmDaiHour
+                    obj.amountOhmDai = ohmDaiArray[j].amountOhmDai
                     obj.depositCountOhmDai = ohmDaiArray[j].depositCountOhmDai
                     obj.redeemCountOhmDai = ohmDaiArray[j].redeemCountOhmDai
-                    obj.payoutOhmDaiHour = ohmDaiArray[j].payoutOhmDaiHour
+                    obj.payoutOhmDai = ohmDaiArray[j].payoutOhmDai
 
                 }
             }
@@ -589,10 +589,10 @@ export async function getDepositsInfoHours(startTimestamp, days)
             {  
                 if(beginTimestamp <= ohmFraxArray[j].timestamp && ohmFraxArray[j].timestamp < endTimestamp)
                 {
-                    obj.amountOhmFraxHour = ohmFraxArray[j].amountOhmFraxHour
+                    obj.amountOhmFrax = ohmFraxArray[j].amountOhmFrax
                     obj.depositCountOhmFrax = ohmFraxArray[j].depositCountOhmFrax
                     obj.redeemCountOhmFrax = ohmFraxArray[j].redeemCountOhmFrax
-                    obj.payoutOhmFraxHour = ohmFraxArray[j].payoutOhmFraxHour
+                    obj.payoutOhmFrax = ohmFraxArray[j].payoutOhmFrax
                 }
             }
             data.push(obj)
@@ -818,10 +818,10 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
                     {
                         
                         let obj = {}
-                        obj.amountDaiMinute = daiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
+                        obj.amountDai = daiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
                         obj.depositCountDai = daiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
                         obj.redeemCountDai = daiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
-                        obj.payoutDaiMinute = daiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
+                        obj.payoutDai = daiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
                         obj.timestamp = daiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
                         daiArray.push(obj)
         
@@ -840,10 +840,10 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
                     {
                         
                         let obj = {}
-                        obj.amountEthMinute = ethDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
+                        obj.amountEth = ethDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
                         obj.depositCountEth = ethDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
                         obj.redeemCountEth = ethDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
-                        obj.payoutEthMinute = ethDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
+                        obj.payoutEth = ethDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
                         obj.timestamp = ethDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
                         ethArray.push(obj)
         
@@ -862,10 +862,10 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
                     {
                         
                         let obj = {}
-                        obj.amountFraxMinute = fraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
+                        obj.amountFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
                         obj.depositCountFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
                         obj.redeemCountFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
-                        obj.payoutFraxMinute = fraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
+                        obj.payoutFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
                         obj.timestamp = fraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
                         fraxArray.push(obj)
         
@@ -884,10 +884,10 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
                     {
                         
                         let obj = {}
-                        obj.amountLusdMinute = lusdDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
+                        obj.amountLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
                         obj.depositCountLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
                         obj.redeemCountLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
-                        obj.payoutLusdMinute = lusdDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
+                        obj.payoutLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
                         obj.timestamp = lusdDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
                         lusdArray.push(obj)
         
@@ -906,10 +906,10 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
                     {
                         
                         let obj = {}
-                        obj.amountOhmDaiMinute = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
+                        obj.amountOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
                         obj.depositCountOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
                         obj.redeemCountOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
-                        obj.payoutOhmDaiMinute = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
+                        obj.payoutOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
                         obj.timestamp = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
                         ohmDaiArray.push(obj)
         
@@ -928,10 +928,10 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
                     {
                         
                         let obj = {}
-                        obj.amountOhmFraxMinute = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
+                        obj.amountOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
                         obj.depositCountOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
                         obj.redeemCountOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
-                        obj.payoutOhmFraxMinute = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
+                        obj.payoutOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
                         obj.timestamp = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
                         ohmFraxArray.push(obj)
                     }
@@ -944,24 +944,24 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
             let beginTimestamp = startTimestamp + i * 60
             let endTimestamp = startTimestamp + (i+1) * 60
             let obj = {
-                amountDaiMinute: 0,
-                amountEthMinute: 0,
-                amountFraxMinute: 0,
-                amountLusdMinute: 0,
-                amountOhmDaiMinute: 0,
-                amountOhmFraxMinute: 0,
+                amountDai: 0,
+                amountEth: 0,
+                amountFrax: 0,
+                amountLusd: 0,
+                amountOhmDai: 0,
+                amountOhmFrax: 0,
                 amountDaiAvg: 0,
                 amountEthAvg: 0,
                 amountLusdAvg: 0,
                 amountFraxAvg: 0,
                 amountOhmDaiAvg: 0,
                 amountOhmFraxAvg:0,
-                payoutDaiMinute: 0,
-                payoutEthMinute: 0,
-                payoutFraxMinute: 0,
-                payoutLusdMinute: 0,
-                payoutOhmDaiMinute: 0,
-                payoutOhmFraxMinute: 0,
+                payoutDai: 0,
+                payoutEth: 0,
+                payoutFrax: 0,
+                payoutLusd: 0,
+                payoutOhmDai: 0,
+                payoutOhmFrax: 0,
                 depositCountDai: 0,
                 depositCountEth: 0,
                 depositCountLusd: 0,
@@ -982,9 +982,9 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
                 if(beginTimestamp <= daiArray[j].timestamp && daiArray[j].timestamp < endTimestamp)
                 {
                     
-                    obj.amountDaiMinute = daiArray[j].amountDaiMinute
+                    obj.amountDai = daiArray[j].amountDai
                     obj.depositCountDai = daiArray[j].depositCountDai
-                    obj.payoutDaiMinute = daiArray[j].payoutDaiMinute
+                    obj.payoutDai = daiArray[j].payoutDai
                     obj.redeemCountDai = daiArray[j].redeemCountDai
                 }
 
@@ -994,9 +994,9 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
                 if(beginTimestamp <= ethArray[j].timestamp && ethArray[j].timestamp < endTimestamp)
                 {
                     
-                    obj.amountEthMinute = ethArray[j].amountEthMinute
+                    obj.amountEth = ethArray[j].amountEth
                     obj.depositCountEth = ethArray[j].depositCountEth
-                    obj.payoutEthMinute = ethArray[j].payoutEthMinute
+                    obj.payoutEth = ethArray[j].payoutEth
                     obj.redeemCountEth = ethArray[j].redeemCountEth
 
                 }
@@ -1006,9 +1006,9 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
             {  
                 if(beginTimestamp <= fraxArray[j].timestamp && fraxArray[j].timestamp < endTimestamp)
                 {
-                    obj.amountFraxMinute = fraxArray[j].amountFraxMinute
+                    obj.amountFrax = fraxArray[j].amountFrax
                     obj.depositCountFrax = fraxArray[j].depositCountFrax
-                    obj.payoutFraxMinute = fraxArray[j].payoutFraxMinute
+                    obj.payoutFrax = fraxArray[j].payoutFrax
                     obj.redeemCountFrax = fraxArray[j].redeemCountFrax
 
                 }
@@ -1017,9 +1017,9 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
             {  
                 if(beginTimestamp <= lusdArray[j].timestamp && lusdArray[j].timestamp < endTimestamp)
                 {
-                    obj.amountLusdMinute = lusdArray[j].amountLusdMinute
+                    obj.amountLusd = lusdArray[j].amountLusd
                     obj.depositCountLusd = lusdArray[j].depositCountLusd
-                    obj.payoutLusdMinute = lusdArray[j].payoutLusdMinute
+                    obj.payoutLusd = lusdArray[j].payoutLusd
                     obj.redeemCountLusd = lusdArray[j].redeemCountLusd
 
                 }
@@ -1028,9 +1028,9 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
             {  
                 if(beginTimestamp <= ohmDaiArray[j].timestamp && ohmDaiArray[j].timestamp < endTimestamp)
                 {
-                    obj.amountOhmDaiMinute = ohmDaiArray[j].amountOhmDaiMinute
+                    obj.amountOhmDai = ohmDaiArray[j].amountOhmDai
                     obj.depositCountOhmDai = ohmDaiArray[j].depositCountOhmDai
-                    obj.payoutOhmDaiMinute = ohmDaiArray[j].payoutOhmDaiMinute
+                    obj.payoutOhmDai = ohmDaiArray[j].payoutOhmDai
                     obj.redeemCountOhmDai = ohmDaiArray[j].redeemCountOhmDai
 
                 }
@@ -1039,9 +1039,9 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
             {  
                 if(beginTimestamp <= ohmFraxArray[j].timestamp && ohmFraxArray[j].timestamp < endTimestamp)
                 {
-                    obj.amountOhmFraxMinute = ohmFraxArray[j].amountOhmFraxMinute
+                    obj.amountOhmFrax = ohmFraxArray[j].amountOhmFrax
                     obj.depositCountOhmFrax = ohmFraxArray[j].depositCountOhmFrax
-                    obj.payoutOhmFraxMinute = ohmFraxArray[j].payoutOhmFraxMinute
+                    obj.payoutOhmFrax = ohmFraxArray[j].payoutOhmFrax
                     obj.redeemCountOhmFrax = ohmFraxArray[j].redeemCountOhmFrax
                 }
             }
