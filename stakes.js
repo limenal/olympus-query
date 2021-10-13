@@ -22,6 +22,8 @@ export async function getStakesInfoDays(startTimestamp, days)
             timestamp
             stakeCount
             unstakeCount
+            stakeMax
+            unstakeMax
           }
         }
       }
@@ -30,7 +32,7 @@ export async function getStakesInfoDays(startTimestamp, days)
     try
     {
       const stakeData = await axios({
-          url: 'https://api.thegraph.com/subgraphs/name/limenal/olympus-stake',
+          url: 'https://api.thegraph.com/subgraphs/id/QmPR96VPnd3y4zrtaEJ2bttPffC6VHt971UVKorEn5qM2w',
           method: 'post',
           data: {
             query: stakeQuery
@@ -48,6 +50,8 @@ export async function getStakesInfoDays(startTimestamp, days)
         obj.amountUnstaked = stakesData[0].dayStake[i].amountUnstaked
         obj.timestamp = stakesData[0].dayStake[i].timestamp
         obj.currentStaked = stakesData[0].dayStake[i].currentStaked
+        obj.stakeMax = stakesData[0].dayStake[i].stakeMax
+        obj.unstakeMax = stakesData[0].dayStake[i].unstakeMax
         stakes.push(obj)
       }
       for(let i = 0; i < days-1; ++i)
@@ -63,6 +67,10 @@ export async function getStakesInfoDays(startTimestamp, days)
           amountStaked: 0,
           amountUnstaked: 0,
           currentStaked: 0,
+          stakeMax: 0,
+          unstakeMax: 0,
+          stakeAvg: 0,
+          unstakeAvg: 0,
           unstakedToStakedPercent: 0,
           unstakedToTotalStakedPercent: 0
         }
@@ -76,6 +84,10 @@ export async function getStakesInfoDays(startTimestamp, days)
             obj.amountStaked = stakes[j].amountStaked
             obj.amountUnstaked = stakes[j].amountUnstaked
             obj.currentStaked = stakes[j].currentStaked
+            obj.stakeMax = stakes[j].stakeMax
+            obj.unstakeMax = stakes[j].unstakeMax
+            obj.stakeAvg = stakes[j].amountStaked / stakes[j].stakeCount
+            obj.unstakeAvg = stakes[j].amountUnstaked / stakes[j].unstakeCount
             obj.unstakedToStakedPercent = 100 * (stakes[j].amountUnstaked/stakes[j].amountStaked)
             obj.unstakedToTotalStakedPercent = 100 * (stakes[j].amountUnstaked / stakes[j].currentStaked)
           }
@@ -111,6 +123,8 @@ export async function getStakesInfoHour(startTimestamp, days)
             timestamp
             stakeCount
             unstakeCount
+            stakeMax
+            unstakeMax
           }
           
         }
@@ -121,7 +135,7 @@ export async function getStakesInfoHour(startTimestamp, days)
   try
   {
     const stakeData = await axios({
-        url: 'https://api.thegraph.com/subgraphs/name/limenal/olympus-stake',
+        url: 'https://api.thegraph.com/subgraphs/id/QmPR96VPnd3y4zrtaEJ2bttPffC6VHt971UVKorEn5qM2w',
         method: 'post',
         data: {
           query: stakeQuery
@@ -141,6 +155,8 @@ export async function getStakesInfoHour(startTimestamp, days)
         obj.amountUnstaked = stakesData[0].dayStake[i].hourStake[j].amountUnstaked
         obj.timestamp = stakesData[0].dayStake[i].hourStake[j].timestamp
         obj.currentStaked = stakesData[0].dayStake[i].hourStake[j].currentStaked
+        obj.stakeMax = stakesData[0].dayStake[i].hourStake[j].stakeMax
+        obj.unstakeMax = stakesData[0].dayStake[i].hourStake[j].unstakeMax
         stakes.push(obj)
       }
     }
@@ -157,6 +173,10 @@ export async function getStakesInfoHour(startTimestamp, days)
         amountStaked: 0,
         amountUnstaked: 0,
         currentStaked: 0,
+        stakeMax: 0,
+        unstakeMax: 0,
+        stakeAvg: 0,
+        unstakeAvg: 0,
         unstakedToStakedPercent: 0,
         unstakedToTotalStakedPercent: 0
       }
@@ -170,6 +190,10 @@ export async function getStakesInfoHour(startTimestamp, days)
           obj.amountStaked = stakes[j].amountStaked
           obj.amountUnstaked = stakes[j].amountUnstaked
           obj.currentStaked = stakes[j].currentStaked
+          obj.stakeMax = stakes[j].stakeMax
+          obj.unstakeMax = stakes[j].unstakeMax
+          obj.stakeAvg = stakes[j].amountStaked / stakes[j].stakeCount
+          obj.unstakeAvg = stakes[j].amountUnstaked / stakes[j].unstakeCount
           obj.unstakedToStakedPercent = 100 * (stakes[j].amountUnstaked/stakes[j].amountStaked)
           obj.unstakedToTotalStakedPercent = 100 * (stakes[j].amountUnstaked / stakes[j].currentStaked)
         }
@@ -208,6 +232,8 @@ export async function getStakesInfoMinute(startTimestamp, days)
               timestamp
               stakeCount
               unstakeCount
+              stakeMax
+              unstakeMax
             }
           }
           
@@ -219,7 +245,7 @@ export async function getStakesInfoMinute(startTimestamp, days)
   try
   {
     const stakeData = await axios({
-      url: 'https://api.thegraph.com/subgraphs/name/limenal/olympus-stake',
+      url: 'https://api.thegraph.com/subgraphs/id/QmPR96VPnd3y4zrtaEJ2bttPffC6VHt971UVKorEn5qM2w',
       method: 'post',
       data: {
         query: stakeQuery
@@ -241,6 +267,8 @@ export async function getStakesInfoMinute(startTimestamp, days)
           obj.amountUnstaked = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].amountUnstaked
           obj.timestamp = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].timestamp
           obj.currentStaked = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].currentStaked
+          obj.stakeMax = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].stakeMax
+          obj.unstakeMax = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].unstakeMax
           stakes.push(obj)
         }
       }
@@ -257,6 +285,10 @@ export async function getStakesInfoMinute(startTimestamp, days)
         amountStaked: 0,
         amountUnstaked: 0,
         currentStaked: 0,
+        stakeMax: 0,
+        unstakeMax: 0,
+        stakeAvg: 0,
+        unstakeAvg: 0,
         unstakedToStakedPercent: 0,
         unstakedToTotalStakedPercent: 0
       }
@@ -270,6 +302,10 @@ export async function getStakesInfoMinute(startTimestamp, days)
           obj.amountUnstaked = stakes[j].amountUnstaked
           obj.currentStaked = stakes[j].currentStaked
           obj.timestamp = stakes[j].timestamp
+          obj.stakeMax = stakes[j].stakeMax
+          obj.unstakeMax = stakes[j].unstakeMax
+          obj.stakeAvg = stakes[j].amountStaked / stakes[j].stakeCount
+          obj.unstakeAvg = stakes[j].amountUnstaked / stakes[j].unstakeCount
           obj.unstakedToStakedPercent = 100 * (stakes[j].amountUnstaked/stakes[j].amountStaked)
           obj.unstakedToTotalStakedPercent = 100 * (stakes[j].amountUnstaked / stakes[j].currentStaked)
         }
