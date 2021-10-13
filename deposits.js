@@ -538,6 +538,10 @@ export async function getDepositsInfoHours(startTimestamp, days)
                     obj.depositCountDai = daiArray[j].depositCountDai
                     obj.redeemCountDai = daiArray[j].redeemCountDai
                     obj.payoutDai = daiArray[j].payoutDai
+                    if(daiArray[j].depositCountDai != 0)
+                    {
+                        obj.amountDaiAvg = daiArray[j].amountDai / daiArray[j].depositCountDai
+                    }
                 }
 
             }
@@ -548,9 +552,12 @@ export async function getDepositsInfoHours(startTimestamp, days)
                     
                     obj.amountEth = ethArray[j].amountEth
                     obj.depositCountEth = ethArray[j].depositCountEth
-                    obj.redeemCountEth = daiArray[j].redeemCountEth
-                    obj.payoutEth = daiArray[j].payoutEth
-
+                    obj.redeemCountEth = ethArray[j].redeemCountEth
+                    obj.payoutEth = ethArray[j].payoutEth
+                    if(ethArray[j].depositCountEth != 0)
+                    {
+                        obj.amountEthAvg = ethArray[j].amountEth / ethArray[j].depositCountEth
+                    }
                 }
 
             }
@@ -562,6 +569,10 @@ export async function getDepositsInfoHours(startTimestamp, days)
                     obj.depositCountFrax = fraxArray[j].depositCountFrax
                     obj.redeemCountFrax = fraxArray[j].redeemCountFrax
                     obj.payoutFrax = fraxArray[j].payoutFrax
+                    if(fraxArray[j].depositCountFrax != 0)
+                    {
+                        obj.amountFraxAvg = fraxArray[j].amountFrax / fraxArray[j].depositCountFrax
+                    }
                 }
             }
             for(let j = 0; j < lusdArray.length; ++j)
@@ -572,6 +583,10 @@ export async function getDepositsInfoHours(startTimestamp, days)
                     obj.depositCountLusd = lusdArray[j].depositCountLusd
                     obj.redeemCountLusd = lusdArray[j].redeemCountLusd
                     obj.payoutLusd = lusdArray[j].payoutLusd
+                    if(lusdArray[j].depositCountLusd != 0)
+                    {
+                        obj.amountLusdAvg = lusdArray[j].amountLusd / lusdArray[j].depositCountLusd
+                    }
                 }
             }
             for(let j = 0; j < ohmDaiArray.length; ++j)
@@ -582,7 +597,10 @@ export async function getDepositsInfoHours(startTimestamp, days)
                     obj.depositCountOhmDai = ohmDaiArray[j].depositCountOhmDai
                     obj.redeemCountOhmDai = ohmDaiArray[j].redeemCountOhmDai
                     obj.payoutOhmDai = ohmDaiArray[j].payoutOhmDai
-
+                    if(ohmDaiArray[j].depositCountOhmDai != 0)
+                    {
+                        obj.amountOhmDaiAvg = ohmDaiArray[j].amountOhmDai / ohmDaiArray[j].depositCountOhmDai
+                    }
                 }
             }
             for(let j = 0; j < ohmFraxArray.length; ++j)
@@ -593,6 +611,10 @@ export async function getDepositsInfoHours(startTimestamp, days)
                     obj.depositCountOhmFrax = ohmFraxArray[j].depositCountOhmFrax
                     obj.redeemCountOhmFrax = ohmFraxArray[j].redeemCountOhmFrax
                     obj.payoutOhmFrax = ohmFraxArray[j].payoutOhmFrax
+                    if(ohmFraxArray[j].depositCountOhmFrax != 0)
+                    {
+                        obj.amountOhmFraxAvg = ohmFraxArray[j].amountOhmFrax / ohmFraxArray[j].depositCountOhmFrax
+                    }
                 }
             }
             data.push(obj)
@@ -986,6 +1008,10 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
                     obj.depositCountDai = daiArray[j].depositCountDai
                     obj.payoutDai = daiArray[j].payoutDai
                     obj.redeemCountDai = daiArray[j].redeemCountDai
+                    if(daiArray[j].depositCountDai != 0)
+                    {
+                        obj.amountDaiAvg = daiArray[j].amountDai / daiArray[j].depositCountDai
+                    }
                 }
 
             }
@@ -998,7 +1024,10 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
                     obj.depositCountEth = ethArray[j].depositCountEth
                     obj.payoutEth = ethArray[j].payoutEth
                     obj.redeemCountEth = ethArray[j].redeemCountEth
-
+                    if(ethArray[j].depositCountEth != 0)
+                    {
+                        obj.amountEthAvg = ethArray[j].amountEth / ethArray[j].depositCountEth
+                    }
                 }
 
             }
@@ -1010,7 +1039,10 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
                     obj.depositCountFrax = fraxArray[j].depositCountFrax
                     obj.payoutFrax = fraxArray[j].payoutFrax
                     obj.redeemCountFrax = fraxArray[j].redeemCountFrax
-
+                    if(fraxArray[j].depositCountFrax != 0)
+                    {
+                        obj.amountFraxAvg = fraxArray[j].amountFrax / fraxArray[j].depositCountFrax
+                    }
                 }
             }
             for(let j = 0; j < lusdArray.length; ++j)
@@ -1021,7 +1053,10 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
                     obj.depositCountLusd = lusdArray[j].depositCountLusd
                     obj.payoutLusd = lusdArray[j].payoutLusd
                     obj.redeemCountLusd = lusdArray[j].redeemCountLusd
-
+                    if(lusdArray[j].depositCountLusd != 0)
+                    {
+                        obj.amountLusdAvg = lusdArray[j].amountLusd / lusdArray[j].depositCountLusd
+                    }
                 }
             }
             for(let j = 0; j < ohmDaiArray.length; ++j)
@@ -1032,7 +1067,10 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
                     obj.depositCountOhmDai = ohmDaiArray[j].depositCountOhmDai
                     obj.payoutOhmDai = ohmDaiArray[j].payoutOhmDai
                     obj.redeemCountOhmDai = ohmDaiArray[j].redeemCountOhmDai
-
+                    if(ohmDaiArray[j].depositCountOhmDai != 0)
+                    {
+                        obj.amountOhmDaiAvg = ohmDaiArray[j].amountOhmDai / ohmDaiArray[j].depositCountOhmDai
+                    }
                 }
             }
             for(let j = 0; j < ohmFraxArray.length; ++j)
@@ -1043,6 +1081,10 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
                     obj.depositCountOhmFrax = ohmFraxArray[j].depositCountOhmFrax
                     obj.payoutOhmFrax = ohmFraxArray[j].payoutOhmFrax
                     obj.redeemCountOhmFrax = ohmFraxArray[j].redeemCountOhmFrax
+                    if(ohmFraxArray[j].depositCountOhmFrax != 0)
+                    {
+                        obj.amountOhmFraxAvg = ohmFraxArray[j].amountOhmFrax / ohmFraxArray[j].depositCountOhmFrax
+                    }
                 }
             }
             data.push(obj)
