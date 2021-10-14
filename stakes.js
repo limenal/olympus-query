@@ -150,19 +150,19 @@ export async function getStakesInfoHour(startTimestamp, days)
     let stakes = []
     for(let k = 0; k < stakesData.length; ++k)
     {
-      for(let i = 0; i < stakesData[0].dayStake.length; ++i)
+      for(let i = 0; i < stakesData[k].dayStake.length; ++i)
       {
-        for(let j = 0; j < stakesData[0].dayStake[i].hourStake.length; ++j)
+        for(let j = 0; j < stakesData[k].dayStake[i].hourStake.length; ++j)
         {
           let obj = {}
-          obj.stakeCount = stakesData[0].dayStake[i].hourStake[j].stakeCount
-          obj.unstakeCount = stakesData[0].dayStake[i].hourStake[j].unstakeCount
-          obj.amountStaked = stakesData[0].dayStake[i].hourStake[j].amountStaked
-          obj.amountUnstaked = stakesData[0].dayStake[i].hourStake[j].amountUnstaked
-          obj.timestamp = stakesData[0].dayStake[i].hourStake[j].timestamp
-          obj.currentStaked = stakesData[0].dayStake[i].hourStake[j].currentStaked
-          obj.stakeMax = stakesData[0].dayStake[i].hourStake[j].stakeMax
-          obj.unstakeMax = stakesData[0].dayStake[i].hourStake[j].unstakeMax
+          obj.stakeCount = stakesData[k].dayStake[i].hourStake[j].stakeCount
+          obj.unstakeCount = stakesData[k].dayStake[i].hourStake[j].unstakeCount
+          obj.amountStaked = stakesData[k].dayStake[i].hourStake[j].amountStaked
+          obj.amountUnstaked = stakesData[k].dayStake[i].hourStake[j].amountUnstaked
+          obj.timestamp = stakesData[k].dayStake[i].hourStake[j].timestamp
+          obj.currentStaked = stakesData[k].dayStake[i].hourStake[j].currentStaked
+          obj.stakeMax = stakesData[k].dayStake[i].hourStake[j].stakeMax
+          obj.unstakeMax = stakesData[k].dayStake[i].hourStake[j].unstakeMax
           stakes.push(obj)
         }
       }
