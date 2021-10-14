@@ -41,19 +41,23 @@ export async function getStakesInfoDays(startTimestamp, days)
       const stakesData = stakeData.data.data.stakeYears
       let data = []
       let stakes = []
-      for(let i = 0; i < stakesData[0].dayStake.length; ++i)
+      for(let k = 0; k < stakesData.length; ++k)
       {
-        let obj = {}
-        obj.stakeCount = stakesData[0].dayStake[i].stakeCount
-        obj.unstakeCount = stakesData[0].dayStake[i].unstakeCount
-        obj.amountStaked = stakesData[0].dayStake[i].amountStaked
-        obj.amountUnstaked = stakesData[0].dayStake[i].amountUnstaked
-        obj.timestamp = stakesData[0].dayStake[i].timestamp
-        obj.currentStaked = stakesData[0].dayStake[i].currentStaked
-        obj.stakeMax = stakesData[0].dayStake[i].stakeMax
-        obj.unstakeMax = stakesData[0].dayStake[i].unstakeMax
-        stakes.push(obj)
+        for(let i = 0; i < stakesData[0].dayStake.length; ++i)
+        {
+          let obj = {}
+          obj.stakeCount = stakesData[k].dayStake[i].stakeCount
+          obj.unstakeCount = stakesData[k].dayStake[i].unstakeCount
+          obj.amountStaked = stakesData[k].dayStake[i].amountStaked
+          obj.amountUnstaked = stakesData[k].dayStake[i].amountUnstaked
+          obj.timestamp = stakesData[k].dayStake[i].timestamp
+          obj.currentStaked = stakesData[k].dayStake[i].currentStaked
+          obj.stakeMax = stakesData[k].dayStake[i].stakeMax
+          obj.unstakeMax = stakesData[k].dayStake[i].unstakeMax
+          stakes.push(obj)
+        }
       }
+      
       for(let i = 0; i < days-1; ++i)
       {
         let beginTimestamp = startTimestamp + i * 86400
@@ -144,22 +148,26 @@ export async function getStakesInfoHour(startTimestamp, days)
     const stakesData = stakeData.data.data.stakeYears
     let data = []
     let stakes = []
-    for(let i = 0; i < stakesData[0].dayStake.length; ++i)
+    for(let k = 0; k < stakesData.length; ++k)
     {
-      for(let j = 0; j < stakesData[0].dayStake[i].hourStake.length; ++j)
+      for(let i = 0; i < stakesData[0].dayStake.length; ++i)
       {
-        let obj = {}
-        obj.stakeCount = stakesData[0].dayStake[i].hourStake[j].stakeCount
-        obj.unstakeCount = stakesData[0].dayStake[i].hourStake[j].unstakeCount
-        obj.amountStaked = stakesData[0].dayStake[i].hourStake[j].amountStaked
-        obj.amountUnstaked = stakesData[0].dayStake[i].hourStake[j].amountUnstaked
-        obj.timestamp = stakesData[0].dayStake[i].hourStake[j].timestamp
-        obj.currentStaked = stakesData[0].dayStake[i].hourStake[j].currentStaked
-        obj.stakeMax = stakesData[0].dayStake[i].hourStake[j].stakeMax
-        obj.unstakeMax = stakesData[0].dayStake[i].hourStake[j].unstakeMax
-        stakes.push(obj)
+        for(let j = 0; j < stakesData[0].dayStake[i].hourStake.length; ++j)
+        {
+          let obj = {}
+          obj.stakeCount = stakesData[0].dayStake[i].hourStake[j].stakeCount
+          obj.unstakeCount = stakesData[0].dayStake[i].hourStake[j].unstakeCount
+          obj.amountStaked = stakesData[0].dayStake[i].hourStake[j].amountStaked
+          obj.amountUnstaked = stakesData[0].dayStake[i].hourStake[j].amountUnstaked
+          obj.timestamp = stakesData[0].dayStake[i].hourStake[j].timestamp
+          obj.currentStaked = stakesData[0].dayStake[i].hourStake[j].currentStaked
+          obj.stakeMax = stakesData[0].dayStake[i].hourStake[j].stakeMax
+          obj.unstakeMax = stakesData[0].dayStake[i].hourStake[j].unstakeMax
+          stakes.push(obj)
+        }
       }
     }
+    
     for(let i = 0; i < 24*days; ++i)
     {
       let beginTimestamp = startTimestamp + i * 3600
@@ -254,25 +262,29 @@ export async function getStakesInfoMinute(startTimestamp, days)
     const stakesData = stakeData.data.data.stakeYears
     let data = []
     let stakes = []
-    for(let i = 0; i < stakesData[0].dayStake.length; ++i)
+    for(let k = 0; k < stakesData.length; ++k)
     {
-      for(let j = 0; j < stakesData[0].dayStake[i].hourStake.length; ++j)
+      for(let i = 0; i < stakesData[k].dayStake.length; ++i)
       {
-        for(let c = 0; c < stakesData[0].dayStake[i].hourStake[j].minuteStake.length; ++c)
+        for(let j = 0; j < stakesData[k].dayStake[i].hourStake.length; ++j)
         {
-          let obj = {}
-          obj.stakeCount = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].stakeCount
-          obj.unstakeCount = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].unstakeCount
-          obj.amountStaked = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].amountStaked
-          obj.amountUnstaked = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].amountUnstaked
-          obj.timestamp = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].timestamp
-          obj.currentStaked = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].currentStaked
-          obj.stakeMax = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].stakeMax
-          obj.unstakeMax = stakesData[0].dayStake[i].hourStake[j].minuteStake[c].unstakeMax
-          stakes.push(obj)
+          for(let c = 0; c < stakesData[k].dayStake[i].hourStake[j].minuteStake.length; ++c)
+          {
+            let obj = {}
+            obj.stakeCount = stakesData[k].dayStake[i].hourStake[j].minuteStake[c].stakeCount
+            obj.unstakeCount = stakesData[k].dayStake[i].hourStake[j].minuteStake[c].unstakeCount
+            obj.amountStaked = stakesData[k].dayStake[i].hourStake[j].minuteStake[c].amountStaked
+            obj.amountUnstaked = stakesData[k].dayStake[i].hourStake[j].minuteStake[c].amountUnstaked
+            obj.timestamp = stakesData[k].dayStake[i].hourStake[j].minuteStake[c].timestamp
+            obj.currentStaked = stakesData[k].dayStake[i].hourStake[j].minuteStake[c].currentStaked
+            obj.stakeMax = stakesData[k].dayStake[i].hourStake[j].minuteStake[c].stakeMax
+            obj.unstakeMax = stakesData[k].dayStake[i].hourStake[j].minuteStake[c].unstakeMax
+            stakes.push(obj)
+          }
         }
       }
     }
+    
     for(let i = 0; i < 60*24*days; ++i)
     {
       let beginTimestamp = startTimestamp + i * 60

@@ -144,54 +144,65 @@ export async function getDepositsInfoDays(startTimestamp, days)
             }
             if(daiDeposits.length != 0)
             {
-                for(let j = 0; j < daiDeposits[0].dayDeposit.length; ++j)
+                for(let k = 0; k < daiDeposits.length; ++k)
                 {
-                    if(beginTimestamp <= daiDeposits[0].dayDeposit[j].timestamp && daiDeposits[0].dayDeposit[j].timestamp < endTimestamp )
+                    for(let j = 0; j < daiDeposits[k].dayDeposit.length; ++j)
                     {
-                        obj.amountDai = daiDeposits[0].dayDeposit[j].amount
-                        obj.depositCountDai = daiDeposits[0].dayDeposit[j].depositCount
-                        obj.redeemCountDai = daiDeposits[0].dayDeposit[j].redeemCount
-                        obj.payoutDai = daiDeposits[0].dayDeposit[j].payout
-                        if(daiDeposits[0].dayDeposit[j].depositCount != 0)
+                        if(beginTimestamp <= daiDeposits[k].dayDeposit[j].timestamp && daiDeposits[k].dayDeposit[j].timestamp < endTimestamp )
                         {
-                            obj.amountDaiAvg = daiDeposits[0].dayDeposit[j].amount/ daiDeposits[0].dayDeposit[j].depositCount
+                            obj.amountDai = daiDeposits[k].dayDeposit[j].amount
+                            obj.depositCountDai = daiDeposits[k].dayDeposit[j].depositCount
+                            obj.redeemCountDai = daiDeposits[k].dayDeposit[j].redeemCount
+                            obj.payoutDai = daiDeposits[k].dayDeposit[j].payout
+                            if(daiDeposits[k].dayDeposit[j].depositCount != 0)
+                            {
+                                obj.amountDaiAvg = daiDeposits[k].dayDeposit[j].amount/ daiDeposits[k].dayDeposit[j].depositCount
+                            }
                         }
+                    
                     }
-                
                 }
+                
             }
             
             if(ethDeposits.length != 0)
             {
-                for(let j = 0; j < ethDeposits[0].dayDeposit.length; ++j)
+                for(let k = 0; k < ethDeposits.length; ++k)
                 {
-                    if(beginTimestamp <= ethDeposits[0].dayDeposit[j].timestamp && ethDeposits[0].dayDeposit[j].timestamp < endTimestamp )
+                    for(let j = 0; j < ethDeposits[k].dayDeposit.length; ++j)
                     {
-                        obj.amountEth = ethDeposits[0].dayDeposit[j].amount
-                        obj.depositCountEth = ethDeposits[0].dayDeposit[j].depositCount
-                        obj.redeemCountEth = ethDeposits[0].dayDeposit[j].redeemCount
-                        obj.payoutEth = ethDeposits[0].dayDeposit[j].payout
-                        if(ethDeposits[0].dayDeposit[j].depositCount != 0)
+                        if(beginTimestamp <= ethDeposits[k].dayDeposit[j].timestamp && ethDeposits[0].dayDeposit[j].timestamp < endTimestamp )
                         {
-                            obj.amountEthAvg = ethDeposits[0].dayDeposit[j].amount/ ethDeposits[0].dayDeposit[j].depositCount
+                            obj.amountEth = ethDeposits[k].dayDeposit[j].amount
+                            obj.depositCountEth = ethDeposits[k].dayDeposit[j].depositCount
+                            obj.redeemCountEth = ethDeposits[k].dayDeposit[j].redeemCount
+                            obj.payoutEth = ethDeposits[k].dayDeposit[j].payout
+                            if(ethDeposits[k].dayDeposit[j].depositCount != 0)
+                            {
+                                obj.amountEthAvg = ethDeposits[k].dayDeposit[j].amount/ ethDeposits[k].dayDeposit[j].depositCount
+                            }
                         }
+                    
                     }
-                
                 }
+                
             }
             if(fraxDeposits.length != 0)
             {
-                for(let j = 0; j < fraxDeposits[0].dayDeposit.length; ++j)
+                for(let k = 0; k < fraxDeposits.length; ++k)
                 {
-                    if(beginTimestamp <= fraxDeposits[0].dayDeposit[j].timestamp && fraxDeposits[0].dayDeposit[j].timestamp < endTimestamp )
+                    for(let j = 0; j < fraxDeposits[k].dayDeposit.length; ++j)
                     {
-                        obj.amountFrax = fraxDeposits[0].dayDeposit[j].amount
-                        obj.depositCountFrax = fraxDeposits[0].dayDeposit[j].depositCount
-                        obj.redeemCountFrax = fraxDeposits[0].dayDeposit[j].redeemCount
-                        obj.payoutFrax = fraxDeposits[0].dayDeposit[j].payout
-                        if(fraxDeposits[0].dayDeposit[j].depositCount != 0)
+                        if(beginTimestamp <= fraxDeposits[k].dayDeposit[j].timestamp && fraxDeposits[k].dayDeposit[j].timestamp < endTimestamp )
                         {
-                            obj.amountFraxAvg = fraxDeposits[0].dayDeposit[j].amount/ fraxDeposits[0].dayDeposit[j].depositCount
+                            obj.amountFrax = fraxDeposits[k].dayDeposit[j].amount
+                            obj.depositCountFrax = fraxDeposits[k].dayDeposit[j].depositCount
+                            obj.redeemCountFrax = fraxDeposits[k].dayDeposit[j].redeemCount
+                            obj.payoutFrax = fraxDeposits[k].dayDeposit[j].payout
+                            if(fraxDeposits[0].dayDeposit[j].depositCount != 0)
+                            {
+                                obj.amountFraxAvg = fraxDeposits[k].dayDeposit[j].amount/ fraxDeposits[k].dayDeposit[j].depositCount
+                            }
                         }
                     }
                 }
@@ -199,56 +210,66 @@ export async function getDepositsInfoDays(startTimestamp, days)
             
             if(lusdDeposits.length != 0)
             {
-                for(let j = 0; j < lusdDeposits[0].dayDeposit.length; ++j)
+                for(let k = 0; k < lusdDeposits.length; ++k)
                 {
-                    if(beginTimestamp <= lusdDeposits[0].dayDeposit[j].timestamp && lusdDeposits[0].dayDeposit[j].timestamp < endTimestamp )
+                    for(let j = 0; j < lusdDeposits[k].dayDeposit.length; ++j)
                     {
-                        obj.amountLusd = lusdDeposits[0].dayDeposit[j].amount
-                        obj.depositCountLusd = lusdDeposits[0].dayDeposit[j].depositCount
-                        obj.redeemCountLusd = lusdDeposits[0].dayDeposit[j].redeemCount
-                        obj.payoutLusd = lusdDeposits[0].dayDeposit[j].payout
-                        if(lusdDeposits[0].dayDeposit[j].depositCount != 0)
+                        if(beginTimestamp <= lusdDeposits[k].dayDeposit[j].timestamp && lusdDeposits[k].dayDeposit[j].timestamp < endTimestamp )
                         {
-                            obj.amountLusdAvg = lusdDeposits[0].dayDeposit[j].amount/ lusdDeposits[0].dayDeposit[j].depositCount
+                            obj.amountLusd = lusdDeposits[k].dayDeposit[j].amount
+                            obj.depositCountLusd = lusdDeposits[k].dayDeposit[j].depositCount
+                            obj.redeemCountLusd = lusdDeposits[k].dayDeposit[j].redeemCount
+                            obj.payoutLusd = lusdDeposits[k].dayDeposit[j].payout
+                            if(lusdDeposits[k].dayDeposit[j].depositCount != 0)
+                            {
+                                obj.amountLusdAvg = lusdDeposits[k].dayDeposit[j].amount/ lusdDeposits[k].dayDeposit[j].depositCount
+                            }
                         }
                     }
                 }
-    
             }
             if(ohmDaiDeposits.length != 0 )
             {
-                for(let j = 0; j < ohmDaiDeposits[0].dayDeposit.length; ++j)
+                for(let k = 0; k < ohmDaiDeposits.length; ++k)
                 {
-                    if(beginTimestamp <= ohmDaiDeposits[0].dayDeposit[j].timestamp && ohmDaiDeposits[0].dayDeposit[j].timestamp < endTimestamp )
+                    for(let j = 0; j < ohmDaiDeposits[k].dayDeposit.length; ++j)
                     {
-                        obj.amountOhmDai = ohmDaiDeposits[0].dayDeposit[j].amount
-                        obj.depositCountOhmDai = ohmDaiDeposits[0].dayDeposit[j].depositCount
-                        obj.redeemCountOhmDai = ohmDaiDeposits[0].dayDeposit[j].redeemCount
-                        obj.payoutOhmDai = ohmDaiDeposits[0].dayDeposit[j].payout
-                        if(ohmDaiDeposits[0].dayDeposit[j].depositCount != 0)
+                        if(beginTimestamp <= ohmDaiDeposits[k].dayDeposit[j].timestamp && ohmDaiDeposits[k].dayDeposit[j].timestamp < endTimestamp )
                         {
-                            obj.amountOhmDaidAvg = ohmDaiDeposits[0].dayDeposit[j].amount/ ohmDaiDeposits[0].dayDeposit[j].depositCount
+                            obj.amountOhmDai = ohmDaiDeposits[k].dayDeposit[j].amount
+                            obj.depositCountOhmDai = ohmDaiDeposits[k].dayDeposit[j].depositCount
+                            obj.redeemCountOhmDai = ohmDaiDeposits[k].dayDeposit[j].redeemCount
+                            obj.payoutOhmDai = ohmDaiDeposits[k].dayDeposit[j].payout
+                            if(ohmDaiDeposits[k].dayDeposit[j].depositCount != 0)
+                            {
+                                obj.amountOhmDaidAvg = ohmDaiDeposits[k].dayDeposit[j].amount/ ohmDaiDeposits[k].dayDeposit[j].depositCount
+                            }
                         }
                     }
                 }
+                
             }
             
             if(ohmFraxDeposits.length != 0)
             {
-                for(let j = 0; j < ohmFraxDeposits[0].dayDeposit.length; ++j)
+                for(let k = 0; k < ohmFraxDeposits.length; ++k)
                 {
-                    if(beginTimestamp <= ohmFraxDeposits[0].dayDeposit[j].timestamp && ohmFraxDeposits[0].dayDeposit[j].timestamp < endTimestamp )
+                    for(let j = 0; j < ohmFraxDeposits[k].dayDeposit.length; ++j)
                     {
-                        obj.amountOhmFrax = ohmFraxDeposits[0].dayDeposit[j].amount
-                        obj.depositCountOhmFrax = ohmFraxDeposits[0].dayDeposit[j].depositCount
-                        obj.redeemCountOhmFrax = ohmFraxDeposits[0].dayDeposit[j].redeemCount
-                        obj.payoutOhmFrax = ohmFraxDeposits[0].dayDeposit[j].payout
-                        if(ohmFraxDeposits[0].dayDeposit[j].depositCount != 0)
+                        if(beginTimestamp <= ohmFraxDeposits[k].dayDeposit[j].timestamp && ohmFraxDeposits[k].dayDeposit[j].timestamp < endTimestamp )
                         {
-                            obj.amountOhmFraxAvg = ohmFraxDeposits[0].dayDeposit[j].amount/ ohmFraxDeposits[0].dayDeposit[j].depositCount
+                            obj.amountOhmFrax = ohmFraxDeposits[k].dayDeposit[j].amount
+                            obj.depositCountOhmFrax = ohmFraxDeposits[k].dayDeposit[j].depositCount
+                            obj.redeemCountOhmFrax = ohmFraxDeposits[k].dayDeposit[j].redeemCount
+                            obj.payoutOhmFrax = ohmFraxDeposits[k].dayDeposit[j].payout
+                            if(ohmFraxDeposits[k].dayDeposit[j].depositCount != 0)
+                            {
+                                obj.amountOhmFraxAvg = ohmFraxDeposits[k].dayDeposit[j].amount/ ohmFraxDeposits[k].dayDeposit[j].depositCount
+                            }
                         }
                     }
                 }
+                
             }
             
             
@@ -385,109 +406,126 @@ export async function getDepositsInfoHours(startTimestamp, days)
 
         if(daiDeposits.length != 0)
         {
-            for(let i = 0; i < daiDeposits[0].dayDeposit.length; ++i)
+            for(let c = 0; c < daiDeposits.length; ++c)
             {
-                
-                for(let k = 0; k < daiDeposits[0].dayDeposit[i].hourDeposit.length; ++k)
+                for(let i = 0; i < daiDeposits[0].dayDeposit.length; ++i)
                 {
-                    let obj = {}
-                    obj.amountDai = daiDeposits[0].dayDeposit[i].hourDeposit[k].amount
-                    obj.payoutDai = daiDeposits[0].dayDeposit[i].hourDeposit[k].payout
-                    obj.depositCountDai = daiDeposits[0].dayDeposit[i].hourDeposit[k].depositCount
-                    obj.redeemCountDai = daiDeposits[0].dayDeposit[i].hourDeposit[k].redeemCount
-                    obj.timestamp = daiDeposits[0].dayDeposit[i].hourDeposit[k].timestamp
-                    daiArray.push(obj)
+                    
+                    for(let k = 0; k < daiDeposits[0].dayDeposit[i].hourDeposit.length; ++k)
+                    {
+                        let obj = {}
+                        obj.amountDai = daiDeposits[c].dayDeposit[i].hourDeposit[k].amount
+                        obj.payoutDai = daiDeposits[c].dayDeposit[i].hourDeposit[k].payout
+                        obj.depositCountDai = daiDeposits[c].dayDeposit[i].hourDeposit[k].depositCount
+                        obj.redeemCountDai = daiDeposits[c].dayDeposit[i].hourDeposit[k].redeemCount
+                        obj.timestamp = daiDeposits[c].dayDeposit[i].hourDeposit[k].timestamp
+                        daiArray.push(obj)
+                    }
                 }
             }
         }
         
         if(ethDeposits.length != 0)
         {
-            for(let i = 0; i < ethDeposits[0].dayDeposit.length; ++i)
+            for(let c = 0; c < ethDeposits.length; ++c)
             {
-                
-                for(let k = 0; k < ethDeposits[0].dayDeposit[i].hourDeposit.length; ++k)
+                for(let i = 0; i < ethDeposits[c].dayDeposit.length; ++i)
                 {
-                    let obj = {}
-                    obj.amountEth = ethDeposits[0].dayDeposit[i].hourDeposit[k].amount
-                    obj.payoutEth = ethDeposits[0].dayDeposit[i].hourDeposit[k].payout
-                    obj.depositCountEth = ethDeposits[0].dayDeposit[i].hourDeposit[k].depositCount
-                    obj.redeemCountEth = ethDeposits[0].dayDeposit[i].hourDeposit[k].redeemCount
-                    obj.timestamp = ethDeposits[0].dayDeposit[i].hourDeposit[k].timestamp
-                    ethArray.push(obj)
+                    for(let k = 0; k < ethDeposits[c].dayDeposit[i].hourDeposit.length; ++k)
+                    {
+                        let obj = {}
+                        obj.amountEth = ethDeposits[c].dayDeposit[i].hourDeposit[k].amount
+                        obj.payoutEth = ethDeposits[c].dayDeposit[i].hourDeposit[k].payout
+                        obj.depositCountEth = ethDeposits[c].dayDeposit[i].hourDeposit[k].depositCount
+                        obj.redeemCountEth = ethDeposits[c].dayDeposit[i].hourDeposit[k].redeemCount
+                        obj.timestamp = ethDeposits[c].dayDeposit[i].hourDeposit[k].timestamp
+                        ethArray.push(obj)
+                    }
                 }
             }
+            
         }
 
         if(fraxDeposits.length != 0)
         {
-            for(let i = 0; i < fraxDeposits[0].dayDeposit.length; ++i)
+            for(let c = 0; c < fraxDeposits.length; ++c)
             {
-                
-                for(let k = 0; k < fraxDeposits[0].dayDeposit[i].hourDeposit.length; ++k)
+                for(let i = 0; i < fraxDeposits[c].dayDeposit.length; ++i)
                 {
-                    let obj = {}
-                    obj.amountFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[k].amount
-                    obj.payoutFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[k].payout
-                    obj.depositCountFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[k].depositCount
-                    obj.redeemCountFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[k].redeemCount
-                    obj.timestamp = fraxDeposits[0].dayDeposit[i].hourDeposit[k].timestamp
-                    fraxArray.push(obj)
+                    for(let k = 0; k < fraxDeposits[c].dayDeposit[i].hourDeposit.length; ++k)
+                    {
+                        let obj = {}
+                        obj.amountFrax = fraxDeposits[c].dayDeposit[i].hourDeposit[k].amount
+                        obj.payoutFrax = fraxDeposits[c].dayDeposit[i].hourDeposit[k].payout
+                        obj.depositCountFrax = fraxDeposits[c].dayDeposit[i].hourDeposit[k].depositCount
+                        obj.redeemCountFrax = fraxDeposits[c].dayDeposit[i].hourDeposit[k].redeemCount
+                        obj.timestamp = fraxDeposits[c].dayDeposit[i].hourDeposit[k].timestamp
+                        fraxArray.push(obj)
+                    }
                 }
-            }
+            } 
         }
         
         if(lusdDeposits.length != 0)
         {
-            for(let i = 0; i < lusdDeposits[0].dayDeposit.length; ++i)
+            for(let c = 0; c < lusdDeposits.length; ++c)
             {
-                
-                for(let k = 0; k < lusdDeposits[0].dayDeposit[i].hourDeposit.length; ++k)
+                for(let i = 0; i < lusdDeposits[c].dayDeposit.length; ++i)
                 {
-                    let obj = {}
-                    obj.amountLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[k].amount
-                    obj.payoutLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[k].payout
-                    obj.depositCountLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[k].depositCount
-                    obj.redeemCountLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[k].redeemCount
-                    obj.timestamp = lusdDeposits[0].dayDeposit[i].hourDeposit[k].timestamp
-                    lusdArray.push(obj)
+                    for(let k = 0; k < lusdDeposits[c].dayDeposit[i].hourDeposit.length; ++k)
+                    {
+                        let obj = {}
+                        obj.amountLusd = lusdDeposits[c].dayDeposit[i].hourDeposit[k].amount
+                        obj.payoutLusd = lusdDeposits[c].dayDeposit[i].hourDeposit[k].payout
+                        obj.depositCountLusd = lusdDeposits[c].dayDeposit[i].hourDeposit[k].depositCount
+                        obj.redeemCountLusd = lusdDeposits[c].dayDeposit[i].hourDeposit[k].redeemCount
+                        obj.timestamp = lusdDeposits[c].dayDeposit[i].hourDeposit[k].timestamp
+                        lusdArray.push(obj)
+                    }
                 }
+            }
+            
+        }
+        
+        if(ohmFraxDeposits.length != 0)
+        {
+            for(let c = 0; c < ohmDaiDeposits.length; ++c)
+            {
+                for(let i = 0; i < ohmDaiDeposits[c].dayDeposit.length; ++i)
+                {
+                    
+                    for(let k = 0; k < ohmDaiDeposits[c].dayDeposit[i].hourDeposit.length; ++k)
+                    {
+                        let obj = {}
+                        obj.amountOhmDai = ohmDaiDeposits[c].dayDeposit[i].hourDeposit[k].amount
+                        obj.payoutOhmDai = ohmDaiDeposits[c].dayDeposit[i].hourDeposit[k].payout
+                        obj.depositCountOhmDai = ohmDaiDeposits[c].dayDeposit[i].hourDeposit[k].depositCount
+                        obj.redeemCountOhmDai = ohmDaiDeposits[c].dayDeposit[i].hourDeposit[k].redeemCount
+                        obj.timestamp = ohmDaiDeposits[c].dayDeposit[i].hourDeposit[k].timestamp
+                        ohmDaiArray.push(obj)
+                    }
+                }    
             }
         }
         
         if(ohmFraxDeposits.length != 0)
         {
-            for(let i = 0; i < ohmDaiDeposits[0].dayDeposit.length; ++i)
+            for(let c = 0; c < ohmFraxDeposits.length; ++c)
             {
-                
-                for(let k = 0; k < ohmDaiDeposits[0].dayDeposit[i].hourDeposit.length; ++k)
+                for(let i = 0; i < ohmFraxDeposits[c].dayDeposit.length; ++i)
                 {
-                    let obj = {}
-                    obj.amountOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[k].amount
-                    obj.payoutOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[k].payout
-                    obj.depositCountOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[k].depositCount
-                    obj.redeemCountOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[k].redeemCount
-                    obj.timestamp = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[k].timestamp
-                    ohmDaiArray.push(obj)
-                }
-            }
-        }
-        
-        if(ohmFraxDeposits.length != 0)
-        {
-            for(let i = 0; i < ohmFraxDeposits[0].dayDeposit.length; ++i)
-            {
-                
-                for(let k = 0; k < ohmFraxDeposits[0].dayDeposit[i].hourDeposit.length; ++k)
-                {
-                    let obj = {}
-                    obj.amountOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[k].amount
-                    obj.payoutOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[k].payout
-                    obj.depositCountOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[k].depositCount
-                    obj.redeemCountOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[k].redeemCount
-                    obj.timestamp = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[k].timestamp
-                    ohmFraxArray.push(obj)
-                }
+                    
+                    for(let k = 0; k < ohmFraxDeposits[c].dayDeposit[i].hourDeposit.length; ++k)
+                    {
+                        let obj = {}
+                        obj.amountOhmFrax = ohmFraxDeposits[c].dayDeposit[i].hourDeposit[k].amount
+                        obj.payoutOhmFrax = ohmFraxDeposits[c].dayDeposit[i].hourDeposit[k].payout
+                        obj.depositCountOhmFrax = ohmFraxDeposits[c].dayDeposit[i].hourDeposit[k].depositCount
+                        obj.redeemCountOhmFrax = ohmFraxDeposits[c].dayDeposit[i].hourDeposit[k].redeemCount
+                        obj.timestamp = ohmFraxDeposits[c].dayDeposit[i].hourDeposit[k].timestamp
+                        ohmFraxArray.push(obj)
+                    }
+                }    
             }
         }
         
@@ -832,43 +870,48 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
 
         if(daiDeposits.length != 0)
         {
-            for(let i = 0; i < daiDeposits[0].dayDeposit.length; ++i)
+            for(let c = 0; c < daiDeposits.length; ++c)
             {
-                for(let j = 0; j < daiDeposits[0].dayDeposit[i].hourDeposit.length; ++j)
+                for(let i = 0; i < daiDeposits[c].dayDeposit.length; ++i)
                 {
-                    for(let k = 0; k < daiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit.length; ++k)
+                    for(let j = 0; j < daiDeposits[c].dayDeposit[i].hourDeposit.length; ++j)
                     {
-                        
-                        let obj = {}
-                        obj.amountDai = daiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
-                        obj.depositCountDai = daiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
-                        obj.redeemCountDai = daiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
-                        obj.payoutDai = daiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
-                        obj.timestamp = daiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
-                        daiArray.push(obj)
-        
+                        for(let k = 0; k < daiDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit.length; ++k)
+                        {
+                            
+                            let obj = {}
+                            obj.amountDai = daiDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
+                            obj.depositCountDai = daiDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
+                            obj.redeemCountDai = daiDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
+                            obj.payoutDai = daiDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
+                            obj.timestamp = daiDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
+                            daiArray.push(obj)
+            
+                        }
                     }
-                }
+                }    
             }
         }
         
         if(ethDeposits.length != 0)
         {
-            for(let i = 0; i < ethDeposits[0].dayDeposit.length; ++i)
+            for(let c = 0; c < ethDeposits.length; ++c)
             {
-                for(let j = 0; j < ethDeposits[0].dayDeposit[i].hourDeposit.length; ++j)
+                for(let i = 0; i < ethDeposits[c].dayDeposit.length; ++i)
                 {
-                    for(let k = 0; k < ethDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit.length; ++k)
+                    for(let j = 0; j < ethDeposits[c].dayDeposit[i].hourDeposit.length; ++j)
                     {
-                        
-                        let obj = {}
-                        obj.amountEth = ethDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
-                        obj.depositCountEth = ethDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
-                        obj.redeemCountEth = ethDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
-                        obj.payoutEth = ethDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
-                        obj.timestamp = ethDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
-                        ethArray.push(obj)
-        
+                        for(let k = 0; k < ethDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit.length; ++k)
+                        {
+                            
+                            let obj = {}
+                            obj.amountEth = ethDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
+                            obj.depositCountEth = ethDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
+                            obj.redeemCountEth = ethDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
+                            obj.payoutEth = ethDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
+                            obj.timestamp = ethDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
+                            ethArray.push(obj)
+                        }
                     }
                 }
             }
@@ -876,86 +919,98 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
         
         if(fraxDeposits.length != 0)
         {
-            for(let i = 0; i < fraxDeposits[0].dayDeposit.length; ++i)
+            for(let c = 0; c < fraxDeposits.length; ++c)
             {
-                for(let j = 0; j < fraxDeposits[0].dayDeposit[i].hourDeposit.length; ++j)
+                for(let i = 0; i < fraxDeposits[c].dayDeposit.length; ++i)
                 {
-                    for(let k = 0; k < fraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit.length; ++k)
+                    for(let j = 0; j < fraxDeposits[c].dayDeposit[i].hourDeposit.length; ++j)
                     {
-                        
-                        let obj = {}
-                        obj.amountFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
-                        obj.depositCountFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
-                        obj.redeemCountFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
-                        obj.payoutFrax = fraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
-                        obj.timestamp = fraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
-                        fraxArray.push(obj)
-        
+                        for(let k = 0; k < fraxDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit.length; ++k)
+                        {
+                            
+                            let obj = {}
+                            obj.amountFrax = fraxDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
+                            obj.depositCountFrax = fraxDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
+                            obj.redeemCountFrax = fraxDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
+                            obj.payoutFrax = fraxDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
+                            obj.timestamp = fraxDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
+                            fraxArray.push(obj)
+            
+                        }
                     }
                 }
-            }
+            }   
         }
         
         if(lusdDeposits.length != 0)
         {
-            for(let i = 0; i < lusdDeposits[0].dayDeposit.length; ++i)
+            for(let c = 0; c < lusdDeposits.length; ++c)
             {
-                for(let j = 0; j < lusdDeposits[0].dayDeposit[i].hourDeposit.length; ++j)
+                for(let i = 0; i < lusdDeposits[c].dayDeposit.length; ++i)
                 {
-                    for(let k = 0; k < lusdDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit.length; ++k)
+                    for(let j = 0; j < lusdDeposits[c].dayDeposit[i].hourDeposit.length; ++j)
                     {
-                        
-                        let obj = {}
-                        obj.amountLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
-                        obj.depositCountLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
-                        obj.redeemCountLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
-                        obj.payoutLusd = lusdDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
-                        obj.timestamp = lusdDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
-                        lusdArray.push(obj)
-        
+                        for(let k = 0; k < lusdDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit.length; ++k)
+                        {
+                            
+                            let obj = {}
+                            obj.amountLusd = lusdDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
+                            obj.depositCountLusd = lusdDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
+                            obj.redeemCountLusd = lusdDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
+                            obj.payoutLusd = lusdDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
+                            obj.timestamp = lusdDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
+                            lusdArray.push(obj)
+            
+                        }
                     }
-                }
+                }    
             }
         }
 
         if(ohmDaiDeposits.length != 0)
         {
-            for(let i = 0; i < ohmDaiDeposits[0].dayDeposit.length; ++i)
+            for(let c = 0; c < ohmDaiDeposits.length; ++c)
             {
-                for(let j = 0; j < ohmDaiDeposits[0].dayDeposit[i].hourDeposit.length; ++j)
+                for(let i = 0; i < ohmDaiDeposits[c].dayDeposit.length; ++i)
                 {
-                    for(let k = 0; k < ohmDaiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit.length; ++k)
+                    for(let j = 0; j < ohmDaiDeposits[c].dayDeposit[i].hourDeposit.length; ++j)
                     {
-                        
-                        let obj = {}
-                        obj.amountOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
-                        obj.depositCountOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
-                        obj.redeemCountOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
-                        obj.payoutOhmDai = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
-                        obj.timestamp = ohmDaiDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
-                        ohmDaiArray.push(obj)
-        
+                        for(let k = 0; k < ohmDaiDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit.length; ++k)
+                        {
+                            
+                            let obj = {}
+                            obj.amountOhmDai = ohmDaiDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
+                            obj.depositCountOhmDai = ohmDaiDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
+                            obj.redeemCountOhmDai = ohmDaiDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
+                            obj.payoutOhmDai = ohmDaiDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
+                            obj.timestamp = ohmDaiDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
+                            ohmDaiArray.push(obj)
+            
+                        }
                     }
-                }
+                }    
             }
         }
         
         if(ohmFraxDeposits.length != 0)
         {
-            for(let i = 0; i < ohmFraxDeposits[0].dayDeposit.length; ++i)
+            for(let c = 0; c < ohmFraxDeposits.length; ++c)
             {
-                for(let j = 0; j < ohmFraxDeposits[0].dayDeposit[i].hourDeposit.length; ++j)
+                for(let i = 0; i < ohmFraxDeposits[c].dayDeposit.length; ++i)
                 {
-                    for(let k = 0; k < ohmFraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit.length; ++k)
+                    for(let j = 0; j < ohmFraxDeposits[c].dayDeposit[i].hourDeposit.length; ++j)
                     {
-                        
-                        let obj = {}
-                        obj.amountOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
-                        obj.depositCountOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
-                        obj.redeemCountOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
-                        obj.payoutOhmFrax = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
-                        obj.timestamp = ohmFraxDeposits[0].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
-                        ohmFraxArray.push(obj)
+                        for(let k = 0; k < ohmFraxDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit.length; ++k)
+                        {
+                            
+                            let obj = {}
+                            obj.amountOhmFrax = ohmFraxDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].amount
+                            obj.depositCountOhmFrax = ohmFraxDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].depositCount
+                            obj.redeemCountOhmFrax = ohmFraxDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].redeemCount
+                            obj.payoutOhmFrax = ohmFraxDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].payout
+                            obj.timestamp = ohmFraxDeposits[c].dayDeposit[i].hourDeposit[j].minuteDeposit[k].timestamp
+                            ohmFraxArray.push(obj)
+                        }
                     }
                 }
             }
