@@ -43,7 +43,7 @@ export async function getStakesInfoDays(startTimestamp, days)
       let stakes = []
       for(let k = 0; k < stakesData.length; ++k)
       {
-        for(let i = 0; i < stakesData[0].dayStake.length; ++i)
+        for(let i = 0; i < stakesData[k].dayStake.length; ++i)
         {
           let obj = {}
           obj.stakeCount = stakesData[k].dayStake[i].stakeCount
