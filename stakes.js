@@ -217,7 +217,7 @@ export async function getStakesInfoHour(startTimestamp, days)
     
 }
 
-export async function getStakesInfo4Hour(startTimestamp, days)
+export async function getStakesInfoNHour(startTimestamp, days, hours)
 {
   let stakeQuery = `
 
@@ -277,8 +277,8 @@ export async function getStakesInfo4Hour(startTimestamp, days)
     
     for(let i = 0; i < 24*days; ++i)
     {
-      let beginTimestamp = startTimestamp + i * 14400
-      let endTimestamp = startTimestamp + (i+1) * 14400
+      let beginTimestamp = startTimestamp + i * hours * 3600
+      let endTimestamp = startTimestamp + (i+1) * hours * 3600
       
       let obj = {
         beginTimestamp: beginTimestamp,

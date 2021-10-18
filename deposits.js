@@ -929,7 +929,7 @@ export async function getDepositsInfoHours(startTimestamp, days)
     }
 }
 
-export async function getDepositsInfo4Hours(startTimestamp, days)
+export async function getDepositsInfoNHours(startTimestamp, days, hours)
 {
     let depositQuery = `
     {
@@ -1262,8 +1262,8 @@ export async function getDepositsInfo4Hours(startTimestamp, days)
         
         for(let i = 0; i < 24*days; ++i)
         {
-            let beginTimestamp = startTimestamp + i * 14400
-            let endTimestamp = startTimestamp + (i+1) * 14400
+            let beginTimestamp = startTimestamp + i * hours * 3600
+            let endTimestamp = startTimestamp + (i+1) * hours * 3600
             let obj = {
                 amountDai: 0,
                 amountEth: 0,
