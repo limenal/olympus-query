@@ -32,7 +32,7 @@ export async function getStakesInfoDays(startTimestamp, days)
     try
     {
       const stakeData = await axios({
-          url: 'https://api.thegraph.com/subgraphs/id/QmPR96VPnd3y4zrtaEJ2bttPffC6VHt971UVKorEn5qM2w',
+          url: 'https://api.thegraph.com/subgraphs/name/limenal/olympus-stake',
           method: 'post',
           data: {
             query: stakeQuery
@@ -135,11 +135,11 @@ export async function getStakesInfoHour(startTimestamp, days)
       }
     }
   `
-
+  
   try
   {
     const stakeData = await axios({
-        url: 'https://api.thegraph.com/subgraphs/id/QmPR96VPnd3y4zrtaEJ2bttPffC6VHt971UVKorEn5qM2w',
+        url: 'https://api.thegraph.com/subgraphs/name/limenal/olympus-stake',
         method: 'post',
         data: {
           query: stakeQuery
@@ -253,7 +253,7 @@ export async function getStakesInfoMinute(startTimestamp, days)
   try
   {
     const stakeData = await axios({
-      url: 'https://api.thegraph.com/subgraphs/id/QmPR96VPnd3y4zrtaEJ2bttPffC6VHt971UVKorEn5qM2w',
+      url: 'https://api.thegraph.com/subgraphs/name/limenal/olympus-stake',
       method: 'post',
       data: {
         query: stakeQuery
