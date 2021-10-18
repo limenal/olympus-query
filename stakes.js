@@ -216,6 +216,119 @@ export async function getStakesInfoHour(startTimestamp, days)
   }
     
 }
+
+export async function getStakesInfo4Hour(startTimestamp, days)
+{
+  let stakeQuery = `
+
+  {
+      stakeYears(first: 100 orderBy:timestamp) {
+    
+        dayStake(first: 365 orderBy:timestamp) {
+          hourStake(first: 24, orderBy:timestamp)
+          {
+            id
+            amountStaked
+            amountUnstaked
+            currentStaked
+            timestamp
+            stakeCount
+            unstakeCount
+            stakeMax
+            unstakeMax
+          }
+          
+        }
+      }
+    }
+  `
+  
+  try
+  {
+    const stakeData = await axios({
+        url: 'https://api.thegraph.com/subgraphs/name/limenal/olympus-stake',
+        method: 'post',
+        data: {
+          query: stakeQuery
+        }
+    }) 
+    const stakesData = stakeData.data.data.stakeYears
+    let data = []
+    let stakes = []
+    for(let k = 0; k < stakesData.length; ++k)
+    {
+      for(let i = 0; i < stakesData[k].dayStake.length; ++i)
+      {
+        for(let j = 0; j < stakesData[k].dayStake[i].hourStake.length; ++j)
+        {
+          let obj = {}
+          obj.stakeCount = stakesData[k].dayStake[i].hourStake[j].stakeCount
+          obj.unstakeCount = stakesData[k].dayStake[i].hourStake[j].unstakeCount
+          obj.amountStaked = stakesData[k].dayStake[i].hourStake[j].amountStaked
+          obj.amountUnstaked = stakesData[k].dayStake[i].hourStake[j].amountUnstaked
+          obj.timestamp = stakesData[k].dayStake[i].hourStake[j].timestamp
+          obj.currentStaked = stakesData[k].dayStake[i].hourStake[j].currentStaked
+          obj.stakeMax = stakesData[k].dayStake[i].hourStake[j].stakeMax
+          obj.unstakeMax = stakesData[k].dayStake[i].hourStake[j].unstakeMax
+          stakes.push(obj)
+        }
+      }
+    }
+    
+    for(let i = 0; i < 24*days; ++i)
+    {
+      let beginTimestamp = startTimestamp + i * 14400
+      let endTimestamp = startTimestamp + (i+1) * 14400
+      
+      let obj = {
+        beginTimestamp: beginTimestamp,
+        endTimestamp: endTimestamp,
+        stakeCount: 0,
+        unstakeCount: 0,
+        amountStaked: 0,
+        amountUnstaked: 0,
+        currentStaked: 0,
+        stakeMax: 0,
+        unstakeMax: 0,
+        stakeAvg: 0,
+        unstakeAvg: 0,
+        unstakedToStakedPercent: 0,
+        unstakedToTotalStakedPercent: 0
+      }
+      for(let j = 0; j < stakes.length; ++j)
+      {
+        
+        if(beginTimestamp <= stakes[j].timestamp && stakes[j].timestamp < endTimestamp)
+        {
+          obj.stakeCount += Number(stakes[j].stakeCount)
+          obj.unstakeCount += Number(stakes[j].unstakeCount)
+          obj.amountStaked += Number(stakes[j].amountStaked)
+          obj.amountUnstaked += Number(stakes[j].amountUnstaked)
+          obj.currentStaked = Number(stakes[j].currentStaked)
+          if(stakes[j].stakeMax > obj.stakeMax)
+          {
+            obj.stakeMax = Number(stakes[j].stakeMax)
+          }
+          if(stakes[j].unstakeMax > obj.unstakeMax)
+          {
+            obj.unstakeMax = Number(stakes[j].unstakeMax)
+          }
+          obj.stakeAvg = obj.amountStaked / obj.stakeCount
+          obj.unstakeAvg = obj.amountUnstaked / obj.unstakeCount
+          obj.unstakedToStakedPercent = 100 * (obj.amountUnstaked / obj.amountStaked)
+          obj.unstakedToTotalStakedPercent = 100 * (obj.amountUnstaked / obj.currentStaked)
+        }
+      }
+      data.push(obj)
+    }
+    return data
+  }
+  catch(err)
+  {
+      console.log(err)
+  }
+}
+
 /**
 
     * @dev : Get stakes (minutes)
