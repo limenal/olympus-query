@@ -5,7 +5,7 @@ import axios from 'axios'
     * @dev : Get stakes (days)
 
 */
-export async function getStakesInfoDays(startTimestamp, days)
+export async function getStakesInfoDays(startTimestamp, endTime)
 {
     
     let stakeQuery = `
@@ -13,7 +13,7 @@ export async function getStakesInfoDays(startTimestamp, days)
     {
         stakeYears(first: 100 orderBy:timestamp) {
       
-          dayStake(first: 365 orderBy:timestamp) {
+          dayStake(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
       
             id
             amountStaked
@@ -58,12 +58,92 @@ export async function getStakesInfoDays(startTimestamp, days)
         }
       }
       
-      for(let i = 0; i < days-1; ++i)
+      let beginTimestamp = startTimestamp
+    let endTimestamp = startTimestamp + 86400
+    let startIndexingTimestamp = 0
+    for(let j = 0; j < stakes.length; ++j)
+    {
+      if(beginTimestamp <= Number(stakes[j].timestamp) && Number(stakes[j].timestamp) < endTimestamp)
       {
-        let beginTimestamp = startTimestamp + i * 86400
-        let endTimestamp = startTimestamp + (i+1) * 86400
-
         let obj = {
+        }
+        obj.stakeCount = stakes[j].stakeCount
+        obj.unstakeCount = stakes[j].unstakeCount
+        obj.amountStaked = stakes[j].amountStaked
+        obj.amountUnstaked = stakes[j].amountUnstaked
+        obj.currentStaked = stakes[j].currentStaked
+        obj.timestamp = stakes[j].timestamp
+        obj.stakeMax = stakes[j].stakeMax
+        obj.unstakeMax = stakes[j].unstakeMax
+        obj.stakeAvg = stakes[j].amountStaked / stakes[j].stakeCount
+        obj.unstakeAvg = stakes[j].amountUnstaked / stakes[j].unstakeCount
+        obj.unstakedToStakedPercent = 100 * (stakes[j].amountUnstaked/stakes[j].amountStaked)
+        obj.unstakedToTotalStakedPercent = 100 * (stakes[j].amountUnstaked / stakes[j].currentStaked)
+
+        beginTimestamp += 86400
+        endTimestamp += 86400
+
+        if(startIndexingTimestamp === 0)
+        {
+          startIndexingTimestamp = stakes[j].timestamp
+        }
+        data.push(obj)  
+      }
+      else
+      {
+        while(endTimestamp <= Number(stakes[j].timestamp))
+        {
+          let obj = {
+            beginTimestamp: beginTimestamp,
+            endTimestamp: endTimestamp,
+            stakeCount: 0,
+            unstakeCount: 0,
+            amountStaked: 0,
+            amountUnstaked: 0,
+            currentStaked: 0,
+            stakeMax: 0,
+            unstakeMax: 0,
+            stakeAvg: 0,
+            unstakeAvg: 0,
+            unstakedToStakedPercent: 0,
+            unstakedToTotalStakedPercent: 0
+          }
+          
+          data.push(obj)
+          
+          beginTimestamp += 86400
+          endTimestamp += 86400
+          
+        }
+        if(beginTimestamp <= Number(stakes[j].timestamp) && Number(stakes[j].timestamp) < endTimestamp )
+        {
+          let obj = {
+          }
+          obj.stakeCount = stakes[j].stakeCount
+          obj.unstakeCount = stakes[j].unstakeCount
+          obj.amountStaked = stakes[j].amountStaked
+          obj.amountUnstaked = stakes[j].amountUnstaked
+          obj.currentStaked = stakes[j].currentStaked
+          obj.timestamp = stakes[j].timestamp
+          obj.stakeMax = stakes[j].stakeMax
+          obj.unstakeMax = stakes[j].unstakeMax
+          obj.stakeAvg = stakes[j].amountStaked / stakes[j].stakeCount
+          obj.unstakeAvg = stakes[j].amountUnstaked / stakes[j].unstakeCount
+          obj.unstakedToStakedPercent = 100 * (stakes[j].amountUnstaked/stakes[j].amountStaked)
+          obj.unstakedToTotalStakedPercent = 100 * (stakes[j].amountUnstaked / stakes[j].currentStaked)
+  
+          beginTimestamp += 86400
+          endTimestamp += 86400
+          
+          data.push(obj)
+        }
+        
+      }
+    }
+    while(data.length < (endTime - startTimestamp) / (60*60*24))
+    {
+      data.push(
+        {
           beginTimestamp: beginTimestamp,
           endTimestamp: endTimestamp,
           stakeCount: 0,
@@ -78,26 +158,10 @@ export async function getStakesInfoDays(startTimestamp, days)
           unstakedToStakedPercent: 0,
           unstakedToTotalStakedPercent: 0
         }
-        for(let j = 0; j < stakes.length; ++j)
-        {
-          
-          if(beginTimestamp <= stakes[j].timestamp && stakes[j].timestamp < endTimestamp)
-          {
-            obj.stakeCount = stakes[j].stakeCount
-            obj.unstakeCount = stakes[j].unstakeCount
-            obj.amountStaked = stakes[j].amountStaked
-            obj.amountUnstaked = stakes[j].amountUnstaked
-            obj.currentStaked = stakes[j].currentStaked
-            obj.stakeMax = stakes[j].stakeMax
-            obj.unstakeMax = stakes[j].unstakeMax
-            obj.stakeAvg = stakes[j].amountStaked / stakes[j].stakeCount
-            obj.unstakeAvg = stakes[j].amountUnstaked / stakes[j].unstakeCount
-            obj.unstakedToStakedPercent = 100 * (stakes[j].amountUnstaked/stakes[j].amountStaked)
-            obj.unstakedToTotalStakedPercent = 100 * (stakes[j].amountUnstaked / stakes[j].currentStaked)
-          }
-        }
-        data.push(obj)
-      }
+      )
+      beginTimestamp += 86400
+      endTimestamp += 86400
+    }
       return data
     }
     catch(err)
@@ -110,14 +174,14 @@ export async function getStakesInfoDays(startTimestamp, days)
     * @dev : Get stakes (hours)
 
 */
-export async function getStakesInfoHour(startTimestamp, days)
+export async function getStakesInfoHour(startTimestamp, endTime)
 {
   let stakeQuery = `
 
   {
       stakeYears(first: 100 orderBy:timestamp) {
     
-        dayStake(first: 365 orderBy:timestamp) {
+        dayStake(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
           hourStake(first: 24, orderBy:timestamp)
           {
             id
@@ -168,45 +232,109 @@ export async function getStakesInfoHour(startTimestamp, days)
       }
     }
     
-    for(let i = 0; i < 24*days; ++i)
+    let beginTimestamp = startTimestamp
+    let endTimestamp = startTimestamp + 3600
+    let startIndexingTimestamp = 0
+    for(let j = 0; j < stakes.length; ++j)
     {
-      let beginTimestamp = startTimestamp + i * 3600
-      let endTimestamp = startTimestamp + (i+1) * 3600
-
-      let obj = {
-        beginTimestamp: beginTimestamp,
-        endTimestamp: endTimestamp,
-        stakeCount: 0,
-        unstakeCount: 0,
-        amountStaked: 0,
-        amountUnstaked: 0,
-        currentStaked: 0,
-        stakeMax: 0,
-        unstakeMax: 0,
-        stakeAvg: 0,
-        unstakeAvg: 0,
-        unstakedToStakedPercent: 0,
-        unstakedToTotalStakedPercent: 0
-      }
-      for(let j = 0; j < stakes.length; ++j)
+      if(beginTimestamp <= Number(stakes[j].timestamp) && Number(stakes[j].timestamp) < endTimestamp)
       {
-        
-        if(beginTimestamp <= stakes[j].timestamp && stakes[j].timestamp < endTimestamp)
+        let obj = {
+        }
+        obj.stakeCount = stakes[j].stakeCount
+        obj.unstakeCount = stakes[j].unstakeCount
+        obj.amountStaked = stakes[j].amountStaked
+        obj.amountUnstaked = stakes[j].amountUnstaked
+        obj.currentStaked = stakes[j].currentStaked
+        obj.timestamp = stakes[j].timestamp
+        obj.stakeMax = stakes[j].stakeMax
+        obj.unstakeMax = stakes[j].unstakeMax
+        obj.stakeAvg = stakes[j].amountStaked / stakes[j].stakeCount
+        obj.unstakeAvg = stakes[j].amountUnstaked / stakes[j].unstakeCount
+        obj.unstakedToStakedPercent = 100 * (stakes[j].amountUnstaked/stakes[j].amountStaked)
+        obj.unstakedToTotalStakedPercent = 100 * (stakes[j].amountUnstaked / stakes[j].currentStaked)
+
+        beginTimestamp += 3600
+        endTimestamp += 3600
+
+        if(startIndexingTimestamp === 0)
         {
+          startIndexingTimestamp = stakes[j].timestamp
+        }
+        data.push(obj)  
+      }
+      else
+      {
+        while(endTimestamp <= Number(stakes[j].timestamp))
+        {
+          let obj = {
+            beginTimestamp: beginTimestamp,
+            endTimestamp: endTimestamp,
+            stakeCount: 0,
+            unstakeCount: 0,
+            amountStaked: 0,
+            amountUnstaked: 0,
+            currentStaked: 0,
+            stakeMax: 0,
+            unstakeMax: 0,
+            stakeAvg: 0,
+            unstakeAvg: 0,
+            unstakedToStakedPercent: 0,
+            unstakedToTotalStakedPercent: 0
+          }
+          
+          data.push(obj)
+          
+          beginTimestamp += 3600
+          endTimestamp += 3600
+          
+        }
+        if(beginTimestamp <= Number(stakes[j].timestamp) && Number(stakes[j].timestamp) < endTimestamp )
+        {
+          let obj = {
+          }
           obj.stakeCount = stakes[j].stakeCount
           obj.unstakeCount = stakes[j].unstakeCount
           obj.amountStaked = stakes[j].amountStaked
           obj.amountUnstaked = stakes[j].amountUnstaked
           obj.currentStaked = stakes[j].currentStaked
+          obj.timestamp = stakes[j].timestamp
           obj.stakeMax = stakes[j].stakeMax
           obj.unstakeMax = stakes[j].unstakeMax
           obj.stakeAvg = stakes[j].amountStaked / stakes[j].stakeCount
           obj.unstakeAvg = stakes[j].amountUnstaked / stakes[j].unstakeCount
           obj.unstakedToStakedPercent = 100 * (stakes[j].amountUnstaked/stakes[j].amountStaked)
           obj.unstakedToTotalStakedPercent = 100 * (stakes[j].amountUnstaked / stakes[j].currentStaked)
+  
+          beginTimestamp += 3600
+          endTimestamp += 3600
+          
+          data.push(obj)
         }
+        
       }
-      data.push(obj)
+    }
+    while(data.length < (endTime - startTimestamp) / (60*60))
+    {
+      data.push(
+        {
+          beginTimestamp: beginTimestamp,
+          endTimestamp: endTimestamp,
+          stakeCount: 0,
+          unstakeCount: 0,
+          amountStaked: 0,
+          amountUnstaked: 0,
+          currentStaked: 0,
+          stakeMax: 0,
+          unstakeMax: 0,
+          stakeAvg: 0,
+          unstakeAvg: 0,
+          unstakedToStakedPercent: 0,
+          unstakedToTotalStakedPercent: 0
+        }
+      )
+      beginTimestamp += 3600
+      endTimestamp += 3600
     }
     return data
   }
@@ -217,14 +345,14 @@ export async function getStakesInfoHour(startTimestamp, days)
     
 }
 
-export async function getStakesInfoNHour(startTimestamp, days, hours)
+export async function getStakesInfoNHour(startTimestamp, endTime, hours)
 {
   let stakeQuery = `
 
   {
       stakeYears(first: 100 orderBy:timestamp) {
     
-        dayStake(first: 365 orderBy:timestamp) {
+        dayStake(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
           hourStake(first: 24, orderBy:timestamp)
           {
             id
@@ -275,10 +403,8 @@ export async function getStakesInfoNHour(startTimestamp, days, hours)
       }
     }
     
-    for(let i = 0; i < 24*days; ++i)
+    for(let beginTimestamp = startTimestamp, endTimestamp = startTimestamp + hours*3600; beginTimestamp < endTime; beginTimestamp += hours*3600, endTimestamp+=hours*3600)
     {
-      let beginTimestamp = startTimestamp + i * hours * 3600
-      let endTimestamp = startTimestamp + (i+1) * hours * 3600
       
       let obj = {
         beginTimestamp: beginTimestamp,
@@ -334,14 +460,14 @@ export async function getStakesInfoNHour(startTimestamp, days, hours)
     * @dev : Get stakes (minutes)
 
 */
-export async function getStakesInfoMinute(startTimestamp, days)
+export async function getStakesInfoMinute(startTimestamp, endTime)
 {
   let stakeQuery = `
 
   {
       stakeYears(first: 100 orderBy:timestamp) {
     
-        dayStake(first: 365 orderBy:timestamp) {
+        dayStake(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} } ) {
           hourStake(first: 24, orderBy:timestamp)
           {
             minuteStake(first:60 orderBy:timestamp)
@@ -398,29 +524,67 @@ export async function getStakesInfoMinute(startTimestamp, days)
       }
     }
     
-    for(let i = 0; i < 60*24*days; ++i)
+    let beginTimestamp = startTimestamp
+    let endTimestamp = startTimestamp + 60
+    let startIndexingTimestamp = 0
+    for(let j = 0; j < stakes.length; ++j)
     {
-      let beginTimestamp = startTimestamp + i * 60
-      let endTimestamp = startTimestamp + (i+1) * 60
-      let obj = {
-        beginTimestamp: beginTimestamp,
-        endTimestamp: endTimestamp,
-        stakeCount: 0,
-        unstakeCount: 0,
-        amountStaked: 0,
-        amountUnstaked: 0,
-        currentStaked: 0,
-        stakeMax: 0,
-        unstakeMax: 0,
-        stakeAvg: 0,
-        unstakeAvg: 0,
-        unstakedToStakedPercent: 0,
-        unstakedToTotalStakedPercent: 0
-      }
-      for(let j = 0; j < stakes.length; ++j)
+      if(beginTimestamp <= Number(stakes[j].timestamp) && Number(stakes[j].timestamp) < endTimestamp)
       {
-        if(beginTimestamp <= stakes[j].timestamp && stakes[j].timestamp < endTimestamp)
+        let obj = {
+        }
+        obj.stakeCount = stakes[j].stakeCount
+        obj.unstakeCount = stakes[j].unstakeCount
+        obj.amountStaked = stakes[j].amountStaked
+        obj.amountUnstaked = stakes[j].amountUnstaked
+        obj.currentStaked = stakes[j].currentStaked
+        obj.timestamp = stakes[j].timestamp
+        obj.stakeMax = stakes[j].stakeMax
+        obj.unstakeMax = stakes[j].unstakeMax
+        obj.stakeAvg = stakes[j].amountStaked / stakes[j].stakeCount
+        obj.unstakeAvg = stakes[j].amountUnstaked / stakes[j].unstakeCount
+        obj.unstakedToStakedPercent = 100 * (stakes[j].amountUnstaked/stakes[j].amountStaked)
+        obj.unstakedToTotalStakedPercent = 100 * (stakes[j].amountUnstaked / stakes[j].currentStaked)
+
+        beginTimestamp += 60
+        endTimestamp += 60
+
+        if(startIndexingTimestamp === 0)
         {
+          startIndexingTimestamp = stakes[j].timestamp
+        }
+        data.push(obj)  
+      }
+      else
+      {
+        while(endTimestamp <= Number(stakes[j].timestamp))
+        {
+          let obj = {
+            beginTimestamp: beginTimestamp,
+            endTimestamp: endTimestamp,
+            stakeCount: 0,
+            unstakeCount: 0,
+            amountStaked: 0,
+            amountUnstaked: 0,
+            currentStaked: 0,
+            stakeMax: 0,
+            unstakeMax: 0,
+            stakeAvg: 0,
+            unstakeAvg: 0,
+            unstakedToStakedPercent: 0,
+            unstakedToTotalStakedPercent: 0
+          }
+          
+          data.push(obj)
+          
+          beginTimestamp += 60
+          endTimestamp += 60
+          
+        }
+        if(beginTimestamp <= Number(stakes[j].timestamp) && Number(stakes[j].timestamp) < endTimestamp )
+        {
+          let obj = {
+          }
           obj.stakeCount = stakes[j].stakeCount
           obj.unstakeCount = stakes[j].unstakeCount
           obj.amountStaked = stakes[j].amountStaked
@@ -433,9 +597,36 @@ export async function getStakesInfoMinute(startTimestamp, days)
           obj.unstakeAvg = stakes[j].amountUnstaked / stakes[j].unstakeCount
           obj.unstakedToStakedPercent = 100 * (stakes[j].amountUnstaked/stakes[j].amountStaked)
           obj.unstakedToTotalStakedPercent = 100 * (stakes[j].amountUnstaked / stakes[j].currentStaked)
+  
+          beginTimestamp += 60
+          endTimestamp += 60
+          
+          data.push(obj)
         }
+        
       }
-      data.push(obj)
+    }
+    while(data.length < (endTime - startTimestamp) / 60)
+    {
+      data.push(
+        {
+          beginTimestamp: beginTimestamp,
+          endTimestamp: endTimestamp,
+          stakeCount: 0,
+          unstakeCount: 0,
+          amountStaked: 0,
+          amountUnstaked: 0,
+          currentStaked: 0,
+          stakeMax: 0,
+          unstakeMax: 0,
+          stakeAvg: 0,
+          unstakeAvg: 0,
+          unstakedToStakedPercent: 0,
+          unstakedToTotalStakedPercent: 0
+        }
+      )
+      beginTimestamp += 60
+      endTimestamp += 60
     }
     return data
   }

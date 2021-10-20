@@ -4,13 +4,13 @@ import axios from 'axios'
     * @dev : Get deposits (days)
 
 */
-export async function getDepositsInfoDays(startTimestamp, days)
+export async function getDepositsInfoDays(startTimestamp, endTime)
 {
     let depositQuery = `
     {
         depositYearDaiEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"DAI"}) {
           
-          dayDeposit(first: 365 orderBy:timestamp) {
+          dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
             
             id
             amount
@@ -25,7 +25,7 @@ export async function getDepositsInfoDays(startTimestamp, days)
         }
         depositYearETHEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"WETH"}) {
           
-          dayDeposit(first: 365 orderBy:timestamp) {
+          dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
             
             id
             amount
@@ -40,7 +40,7 @@ export async function getDepositsInfoDays(startTimestamp, days)
         }
         depositYearFraxEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"FRAX"}) {
           
-          dayDeposit(first: 365 orderBy:timestamp) {
+          dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
             
             id
                   amount
@@ -56,7 +56,7 @@ export async function getDepositsInfoDays(startTimestamp, days)
         
         depositYearLusdEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"LUSD"}) {
           
-          dayDeposit(first: 365 orderBy:timestamp) {
+          dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
             
             id
                   amount
@@ -72,7 +72,7 @@ export async function getDepositsInfoDays(startTimestamp, days)
         
         depositYearOHMDAIEntities:depositYearEntities(first: 100 orderBy:timestamp where:{token:"OHM-DAI"}) {
           
-          dayDeposit(first: 365 orderBy:timestamp) {
+          dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
             
             id
             amount
@@ -88,7 +88,7 @@ export async function getDepositsInfoDays(startTimestamp, days)
         
         depositYearOHMFRAXEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"OHM-FRAX"}) {
           
-          dayDeposit(first: 365 orderBy:timestamp) {
+          dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
             
             id
             amount
@@ -103,7 +103,7 @@ export async function getDepositsInfoDays(startTimestamp, days)
         }
         depositYearOHMLUSDEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"OHM-LUSD"}) {
           
-            dayDeposit(first: 365 orderBy:timestamp) {
+            dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
               
                 id
                 amount
@@ -130,7 +130,6 @@ export async function getDepositsInfoDays(startTimestamp, days)
               query: depositQuery
             }
         }) 
-        console.log(depositData.data.data)
         const daiDeposits = depositData.data.data.depositYearDaiEntities
         const ethDeposits = depositData.data.data.depositYearETHEntities
         const fraxDeposits = depositData.data.data.depositYearFraxEntities
@@ -139,11 +138,9 @@ export async function getDepositsInfoDays(startTimestamp, days)
         const ohmFraxDeposits = depositData.data.data.depositYearOHMFRAXEntities
         const ohmLusdDeposits = depositData.data.data.depositYearOHMLUSDEntities
         let data = []
-        for(let i = 0; i < days - 1; ++i)
+        for(let beginTimestamp = startTimestamp, endTimestamp = startTimestamp + 86400; beginTimestamp < endTime; beginTimestamp += 86400, endTimestamp+=86400)
         {
             
-            let beginTimestamp = startTimestamp + i * 86400
-            let endTimestamp = startTimestamp + (i+1) * 86400
             let obj = {
                 amountDai: 0,
                 amountEth: 0,
@@ -403,7 +400,7 @@ export async function getDepositsInfoHours(startTimestamp, days)
     {
         depositYearDaiEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"DAI"}) {
           
-          dayDeposit(first: 365 orderBy:timestamp) {
+          dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
             
             hourDeposit(first: 24 orderBy:timestamp) {
               id
@@ -421,7 +418,7 @@ export async function getDepositsInfoHours(startTimestamp, days)
         }
         depositYearETHEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"WETH"}) {
           
-            dayDeposit(first: 365 orderBy:timestamp) {
+            dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
                 
               hourDeposit(first: 24 orderBy:timestamp) {
                 id
@@ -439,7 +436,7 @@ export async function getDepositsInfoHours(startTimestamp, days)
           }
           depositYearFraxEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"FRAX"}) {
           
-            dayDeposit(first: 365 orderBy:timestamp) {
+            dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
                 
               hourDeposit(first: 24 orderBy:timestamp) {
                 id
@@ -457,7 +454,7 @@ export async function getDepositsInfoHours(startTimestamp, days)
           }
           depositYearLusdEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"LUSD"}) {
           
-            dayDeposit(first: 365 orderBy:timestamp) {
+            dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
                 
               hourDeposit(first: 24 orderBy:timestamp) {
                 id
@@ -475,7 +472,7 @@ export async function getDepositsInfoHours(startTimestamp, days)
           }
           depositYearOHMDAIEntities:depositYearEntities(first: 100 orderBy:timestamp where:{token:"OHM-DAI"}) {
           
-            dayDeposit(first: 365 orderBy:timestamp) {
+            dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
                 
               hourDeposit(first: 24 orderBy:timestamp) {
                 id
@@ -493,7 +490,7 @@ export async function getDepositsInfoHours(startTimestamp, days)
           }
           depositYearOHMFRAXEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"OHM-FRAX"}) {
           
-            dayDeposit(first: 365 orderBy:timestamp) {
+            dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
                 
               hourDeposit(first: 24 orderBy:timestamp) {
                 id
@@ -511,7 +508,7 @@ export async function getDepositsInfoHours(startTimestamp, days)
           }
           depositYearOHMLUSDEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"OHM-LUSD"}) {
           
-            dayDeposit(first: 365 orderBy:timestamp) {
+            dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
                 
               hourDeposit(first: 24 orderBy:timestamp) {
                 id
@@ -728,10 +725,8 @@ export async function getDepositsInfoHours(startTimestamp, days)
             }
         }
         
-        for(let i = 0; i < 24*days; ++i)
+        for(let beginTimestamp = startTimestamp, endTimestamp = startTimestamp + 3600; beginTimestamp < endTime; beginTimestamp += 3600, endTimestamp+=3600)
         {
-            let beginTimestamp = startTimestamp + i * 3600
-            let endTimestamp = startTimestamp + (i+1) * 3600
             let obj = {
                 amountDai: 0,
                 amountEth: 0,
@@ -929,13 +924,13 @@ export async function getDepositsInfoHours(startTimestamp, days)
     }
 }
 
-export async function getDepositsInfoNHours(startTimestamp, days, hours)
+export async function getDepositsInfoNHours(startTimestamp, endTime, hours)
 {
     let depositQuery = `
     {
         depositYearDaiEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"DAI"}) {
           
-          dayDeposit(first: 365 orderBy:timestamp) {
+          dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
             
             hourDeposit(first: 24 orderBy:timestamp) {
               id
@@ -953,7 +948,7 @@ export async function getDepositsInfoNHours(startTimestamp, days, hours)
         }
         depositYearETHEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"WETH"}) {
           
-            dayDeposit(first: 365 orderBy:timestamp) {
+            dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
                 
               hourDeposit(first: 24 orderBy:timestamp) {
                 id
@@ -971,7 +966,7 @@ export async function getDepositsInfoNHours(startTimestamp, days, hours)
           }
           depositYearFraxEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"FRAX"}) {
           
-            dayDeposit(first: 365 orderBy:timestamp) {
+            dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
                 
               hourDeposit(first: 24 orderBy:timestamp) {
                 id
@@ -989,7 +984,7 @@ export async function getDepositsInfoNHours(startTimestamp, days, hours)
           }
           depositYearLusdEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"LUSD"}) {
           
-            dayDeposit(first: 365 orderBy:timestamp) {
+            dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
                 
               hourDeposit(first: 24 orderBy:timestamp) {
                 id
@@ -1007,7 +1002,7 @@ export async function getDepositsInfoNHours(startTimestamp, days, hours)
           }
           depositYearOHMDAIEntities:depositYearEntities(first: 100 orderBy:timestamp where:{token:"OHM-DAI"}) {
           
-            dayDeposit(first: 365 orderBy:timestamp) {
+            dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
                 
               hourDeposit(first: 24 orderBy:timestamp) {
                 id
@@ -1025,7 +1020,7 @@ export async function getDepositsInfoNHours(startTimestamp, days, hours)
           }
           depositYearOHMFRAXEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"OHM-FRAX"}) {
           
-            dayDeposit(first: 365 orderBy:timestamp) {
+            dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
                 
               hourDeposit(first: 24 orderBy:timestamp) {
                 id
@@ -1043,7 +1038,7 @@ export async function getDepositsInfoNHours(startTimestamp, days, hours)
           }
           depositYearOHMLUSDEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"OHM-LUSD"}) {
           
-            dayDeposit(first: 365 orderBy:timestamp) {
+            dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }) {
                 
               hourDeposit(first: 24 orderBy:timestamp) {
                 id
@@ -1239,10 +1234,10 @@ export async function getDepositsInfoNHours(startTimestamp, days, hours)
         {
             for(let c = 0; c < ohmLusdDeposits.length; ++c)
             {
-                for(let i = 0; i < ohmLusdDeposits[0].dayDeposit.length; ++i)
+                for(let i = 0; i < ohmLusdDeposits[c].dayDeposit.length; ++i)
                 {
                     
-                    for(let k = 0; k < ohmLusdDeposits[0].dayDeposit[i].hourDeposit.length; ++k)
+                    for(let k = 0; k < ohmLusdDeposits[c].dayDeposit[i].hourDeposit.length; ++k)
                     {
                         let obj = {}
                         obj.adjustment = ohmLusdDeposits[c].dayDeposit[i].hourDeposit[k].adjustment
@@ -1260,10 +1255,8 @@ export async function getDepositsInfoNHours(startTimestamp, days, hours)
             }
         }
         
-        for(let i = 0; i < 24*days; ++i)
+        for(let beginTimestamp = startTimestamp, endTimestamp = startTimestamp + hours*3600; beginTimestamp < endTime; beginTimestamp += hours*3600, endTimestamp+=hours*3600)
         {
-            let beginTimestamp = startTimestamp + i * hours * 3600
-            let endTimestamp = startTimestamp + (i+1) * hours * 3600
             let obj = {
                 amountDai: 0,
                 amountEth: 0,
@@ -1466,13 +1459,13 @@ export async function getDepositsInfoNHours(startTimestamp, days, hours)
     * @dev : Get deposits (minutes)
 
 */
-export async function getDepositsInfoMinutes(startTimestamp, days)
+export async function getDepositsInfoMinutes(startTimestamp, endTime)
 {
     let depositQueryDai = `
     {
         depositYearDaiEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"DAI"}) {
           
-          dayDeposit(first: 365 orderBy:timestamp) {
+          dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} } ) {
             
             hourDeposit(first: 24 orderBy:timestamp) {
                 minuteDeposit(first: 60 orderBy:timestamp)
@@ -1499,7 +1492,7 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
     {
         depositYearETHEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"WETH"}) {
           
-          dayDeposit(first: 365 orderBy:timestamp) {
+          dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} } ) {
             
             hourDeposit(first: 24 orderBy:timestamp) {
                 minuteDeposit(first: 60 orderBy:timestamp)
@@ -1526,7 +1519,7 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
     {
         depositYearFraxEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"FRAX"}) {
           
-          dayDeposit(first: 365 orderBy:timestamp) {
+          dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} } ) {
             
             hourDeposit(first: 24 orderBy:timestamp) {
                 minuteDeposit(first: 60 orderBy:timestamp)
@@ -1552,7 +1545,7 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
     {
         depositYearLusdEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"LUSD"}) {
           
-          dayDeposit(first: 365 orderBy:timestamp) {
+          dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} } ) {
             
             hourDeposit(first: 24 orderBy:timestamp) {
                 minuteDeposit(first: 60 orderBy:timestamp)
@@ -1579,7 +1572,7 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
     {
         depositYearOHMDAIEntities:depositYearEntities(first: 100 orderBy:timestamp where:{token:"OHM-DAI"}) {
           
-          dayDeposit(first: 365 orderBy:timestamp) {
+          dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} } ) {
             
             hourDeposit(first: 24 orderBy:timestamp) {
                 minuteDeposit(first: 60 orderBy:timestamp)
@@ -1606,7 +1599,7 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
     {
         depositYearOHMFRAXEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"OHM-FRAX"}) {
           
-          dayDeposit(first: 365 orderBy:timestamp) {
+          dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} } ) {
             
             hourDeposit(first: 24 orderBy:timestamp) {
                 minuteDeposit(first: 60 orderBy:timestamp)
@@ -1633,7 +1626,7 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
     {
         depositYearOHMLUSDEntities:depositYearEntities(first: 100 orderBy:timestamp, where:{token:"OHM-LUSD"}) {
           
-          dayDeposit(first: 365 orderBy:timestamp) {
+          dayDeposit(first: 365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} } ) {
             
             hourDeposit(first: 24 orderBy:timestamp) {
                 minuteDeposit(first: 60 orderBy:timestamp)
@@ -1659,6 +1652,8 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
 
     try
     {
+        console.log(Date())
+
         const depositDataDai = await axios({
             url: 'https://api.thegraph.com/subgraphs/name/limenal/olympus-stake',
             method: 'post',
@@ -1709,6 +1704,7 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
               query: depositQueryOhmLusd
             }
         })
+        console.log(Date())
         const daiDeposits = depositDataDai.data.data.depositYearDaiEntities
         const ethDeposits = depositDataEth.data.data.depositYearETHEntities
         const fraxDeposits = depositDataFrax.data.data.depositYearFraxEntities 
@@ -1923,10 +1919,11 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
                 }
             }
         }
-        for(let i = 0; i < 60*24*days; ++i)
+        // let beginTimestamp = startTimestamp 
+        // let endTimestamp = startTimestamp + 60
+
+        for(let beginTimestamp = startTimestamp, endTimestamp = startTimestamp + 60; beginTimestamp < endTime; beginTimestamp += 60, endTimestamp+=60)
         {
-            let beginTimestamp = startTimestamp + i * 60
-            let endTimestamp = startTimestamp + (i+1) * 60
             let obj = {
                 amountDai: 0,
                 amountEth: 0,
@@ -2110,7 +2107,7 @@ export async function getDepositsInfoMinutes(startTimestamp, days)
             }
             data.push(obj)
         }
-
+        console.log(Date())
         return data
     }
     catch(err)
