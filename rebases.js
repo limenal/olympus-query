@@ -1,13 +1,13 @@
 import axios from 'axios'
 
-export async function getRebasesInfoDays(startTimestamp, days)
+export async function getRebasesInfoDays(startTimestamp, endTime)
 {
     
     let rebaseQuery = `
 
     {
         rebaseYears(first: 3){
-          dayRebase(first:365 orderBy:timestamp, orderDirection:asc){
+          dayRebase(first:365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }){
             percentage
             id
             timestamp
@@ -17,11 +17,11 @@ export async function getRebasesInfoDays(startTimestamp, days)
       }
       
     `
-
+      console.log(rebaseQuery)
     try
     {
       const rebaseData = await axios({
-          url: 'https://api.thegraph.com/subgraphs/id/Qmf9iRTGY3fWmsr1m9qsnJdMD9MYw1g9He8aJdtu3fNSiX',
+          url: 'https://api.thegraph.com/subgraphs/name/limenal/olympus-stake',
           method: 'post',
           data: {
             query: rebaseQuery
@@ -35,12 +35,11 @@ export async function getRebasesInfoDays(startTimestamp, days)
         {
           let obj = {}
           obj.percentage = rebasesData[k].dayRebase[i].percentage
-          obj.apy = Math.pow((1 + Number(rebasesData[k].dayRebase[i].percentage)),1095)
+          obj.apy = Math.pow((1 + Number(rebasesData[k].dayRebase[i].percentage)), 1095)
           obj.timestamp = rebasesData[k].dayRebase[i].timestamp
           data.push(obj)
         }
       }
-      
       return data
     }
     catch(err)
