@@ -394,7 +394,7 @@ export async function getDepositsInfoDays(startTimestamp, endTime)
     * @dev : Get deposits (hours)
 
 */
-export async function getDepositsInfoHours(startTimestamp, days)
+export async function getDepositsInfoHours(startTimestamp)
 {
     let depositQuery = `
     {
