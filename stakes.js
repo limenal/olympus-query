@@ -45,7 +45,8 @@ export async function getStakesInfoDays(startTimestamp, endTime)
       {
         for(let i = 0; i < stakesData[k].dayStake.length; ++i)
         {
-          let obj = {}
+          let obj = {
+          }
           obj.stakeCount = stakesData[k].dayStake[i].stakeCount
           obj.unstakeCount = stakesData[k].dayStake[i].unstakeCount
           obj.amountStaked = stakesData[k].dayStake[i].amountStaked
@@ -58,7 +59,7 @@ export async function getStakesInfoDays(startTimestamp, endTime)
         }
       }
       
-      let beginTimestamp = startTimestamp
+    let beginTimestamp = startTimestamp
     let endTimestamp = startTimestamp + 86400
     let startIndexingTimestamp = 0
     for(let j = 0; j < stakes.length; ++j)
@@ -66,6 +67,8 @@ export async function getStakesInfoDays(startTimestamp, endTime)
       if(beginTimestamp <= Number(stakes[j].timestamp) && Number(stakes[j].timestamp) < endTimestamp)
       {
         let obj = {
+          beginTimestamp: beginTimestamp,
+          endTimestamp: endTimestamp
         }
         obj.stakeCount = stakes[j].stakeCount
         obj.unstakeCount = stakes[j].unstakeCount
@@ -118,6 +121,8 @@ export async function getStakesInfoDays(startTimestamp, endTime)
         if(beginTimestamp <= Number(stakes[j].timestamp) && Number(stakes[j].timestamp) < endTimestamp )
         {
           let obj = {
+            beginTimestamp: beginTimestamp,
+            endTimestamp: endTimestamp
           }
           obj.stakeCount = stakes[j].stakeCount
           obj.unstakeCount = stakes[j].unstakeCount
@@ -162,7 +167,7 @@ export async function getStakesInfoDays(startTimestamp, endTime)
       beginTimestamp += 86400
       endTimestamp += 86400
     }
-      return data
+    return data
     }
     catch(err)
     {
@@ -218,7 +223,8 @@ export async function getStakesInfoHour(startTimestamp, endTime)
       {
         for(let j = 0; j < stakesData[k].dayStake[i].hourStake.length; ++j)
         {
-          let obj = {}
+          let obj = {
+          }
           obj.stakeCount = stakesData[k].dayStake[i].hourStake[j].stakeCount
           obj.unstakeCount = stakesData[k].dayStake[i].hourStake[j].unstakeCount
           obj.amountStaked = stakesData[k].dayStake[i].hourStake[j].amountStaked
@@ -240,6 +246,8 @@ export async function getStakesInfoHour(startTimestamp, endTime)
       if(beginTimestamp <= Number(stakes[j].timestamp) && Number(stakes[j].timestamp) < endTimestamp)
       {
         let obj = {
+          beginTimestamp: beginTimestamp,
+          endTimestamp: endTimestamp
         }
         obj.stakeCount = stakes[j].stakeCount
         obj.unstakeCount = stakes[j].unstakeCount
@@ -292,6 +300,8 @@ export async function getStakesInfoHour(startTimestamp, endTime)
         if(beginTimestamp <= Number(stakes[j].timestamp) && Number(stakes[j].timestamp) < endTimestamp )
         {
           let obj = {
+            beginTimestamp: beginTimestamp,
+            endTimestamp: endTimestamp
           }
           obj.stakeCount = stakes[j].stakeCount
           obj.unstakeCount = stakes[j].unstakeCount
@@ -389,7 +399,8 @@ export async function getStakesInfoNHour(startTimestamp, endTime, hours)
       {
         for(let j = 0; j < stakesData[k].dayStake[i].hourStake.length; ++j)
         {
-          let obj = {}
+          let obj = {
+          }
           obj.stakeCount = stakesData[k].dayStake[i].hourStake[j].stakeCount
           obj.unstakeCount = stakesData[k].dayStake[i].hourStake[j].unstakeCount
           obj.amountStaked = stakesData[k].dayStake[i].hourStake[j].amountStaked
@@ -509,7 +520,8 @@ export async function getStakesInfoMinute(startTimestamp, endTime)
         {
           for(let c = 0; c < stakesData[k].dayStake[i].hourStake[j].minuteStake.length; ++c)
           {
-            let obj = {}
+            let obj = {
+            }
             obj.stakeCount = stakesData[k].dayStake[i].hourStake[j].minuteStake[c].stakeCount
             obj.unstakeCount = stakesData[k].dayStake[i].hourStake[j].minuteStake[c].unstakeCount
             obj.amountStaked = stakesData[k].dayStake[i].hourStake[j].minuteStake[c].amountStaked
@@ -532,6 +544,8 @@ export async function getStakesInfoMinute(startTimestamp, endTime)
       if(beginTimestamp <= Number(stakes[j].timestamp) && Number(stakes[j].timestamp) < endTimestamp)
       {
         let obj = {
+          beginTimestamp: beginTimestamp,
+          endTimestamp: endTimestamp
         }
         obj.stakeCount = stakes[j].stakeCount
         obj.unstakeCount = stakes[j].unstakeCount
@@ -584,6 +598,8 @@ export async function getStakesInfoMinute(startTimestamp, endTime)
         if(beginTimestamp <= Number(stakes[j].timestamp) && Number(stakes[j].timestamp) < endTimestamp )
         {
           let obj = {
+            beginTimestamp: beginTimestamp,
+            endTimestamp: endTimestamp
           }
           obj.stakeCount = stakes[j].stakeCount
           obj.unstakeCount = stakes[j].unstakeCount
