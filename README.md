@@ -24,11 +24,11 @@
       for(let j = 0; j < data.length; ++j)
       {
         
-        if(beginTimestamp <= stakes[j].timestamp && stakes[j].timestamp < endTimestamp)
+        if(beginTimestamp <= data[j].timestamp && data[j].timestamp < endTimestamp)
         {
 
             // add items to object
         }
       }
-      data.push(obj)
+      resultData.push(obj)
     }
