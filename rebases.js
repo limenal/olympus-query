@@ -36,6 +36,7 @@ export async function getRebasesInfoDays(startTimestamp, endTime)
       const rebasesData = rebaseData.data.data.rebaseYears
       let data = []
       let lastApy = 0
+      let resData = []
       for(let k = 0; k < rebasesData.length; ++k)
       {
         for(let i = 0; i < rebasesData[k].dayRebase.length; ++i)
@@ -43,22 +44,39 @@ export async function getRebasesInfoDays(startTimestamp, endTime)
           let obj = {}
           obj.percentage = rebasesData[k].dayRebase[i].percentage
           let apy = Math.pow((1 + Number(rebasesData[k].dayRebase[i].percentage)), 1095)
-          if(apy > 1000)
-          {
-            
-            obj.apy = lastApy
-            
-          }
-          else
-          {
-            obj.apy = apy
-            lastApy = apy
-          }
+          obj.apy = apy
           obj.timestamp = rebasesData[k].dayRebase[i].timestamp
           data.push(obj)
         }
       }
-      return data
+
+      let prevPercentage = 0
+      let prevApy = 0
+      for(let beginTimestamp = startTimestamp, endTimestamp = startTimestamp + 86400; beginTimestamp < endTime; beginTimestamp += 86400, endTimestamp+= 86400)
+      {
+        
+        let obj = {
+          beginTimestamp: beginTimestamp,
+          endTimestamp: endTimestamp,
+          percentage: prevPercentage,
+          apy: prevApy,
+        }
+        for(let j = 0; j < data.length; ++j)
+        {
+          if(beginTimestamp <= data[j].timestamp && data[j].timestamp < endTimestamp)
+          {
+            if(Number(data[j].apy) < 1000)
+            {
+              obj.apy = data[j].apy
+              obj.percentage = data[j].percentage
+              prevPercentage = data[j].percentage
+              prevApy = data[j].apy
+            }            
+          }
+        }
+        resData.push(obj)
+      } 
+      return resData
     }
     catch(err)
     {
