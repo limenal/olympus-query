@@ -1,5 +1,12 @@
 import axios from 'axios'
 
+/**
+
+    * @dev : Get rebases (days)
+    * @param startTimestamp - Start timestamp for query 
+    * @param endTime - End timestamp for query
+
+*/
 export async function getRebasesInfoDays(startTimestamp, endTime)
 {
     

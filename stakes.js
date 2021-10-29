@@ -3,6 +3,8 @@ import axios from 'axios'
 /**
 
     * @dev : Get stakes (days)
+    * @param startTimestamp - Start timestamp for query 
+    * @param endTime - End timestamp for query
 
 */
 export async function getStakesInfoDays(startTimestamp, endTime)
@@ -177,6 +179,8 @@ export async function getStakesInfoDays(startTimestamp, endTime)
 /**
 
     * @dev : Get stakes (hours)
+    * @param startTimestamp - Start timestamp for query 
+    * @param endTime - End timestamp for query
 
 */
 export async function getStakesInfoHour(startTimestamp, endTime)
@@ -354,7 +358,13 @@ export async function getStakesInfoHour(startTimestamp, endTime)
   }
     
 }
+/**
 
+    * @dev : Get stakes (N hours)
+    * @param startTimestamp - Start timestamp for query 
+    * @param endTime - End timestamp for query
+
+*/
 export async function getStakesInfoNHour(startTimestamp, endTime, hours)
 {
   let stakeQuery = `
@@ -469,6 +479,8 @@ export async function getStakesInfoNHour(startTimestamp, endTime, hours)
 /**
 
     * @dev : Get stakes (minutes)
+    * @param startTimestamp - Start timestamp for query 
+    * @param endTime - End timestamp for query
 
 */
 export async function getStakesInfoMinute(startTimestamp, endTime)

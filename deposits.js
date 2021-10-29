@@ -2,6 +2,8 @@ import axios from 'axios'
 /**
 
     * @dev : Get deposits (days)
+    * @param startTimestamp - Start timestamp for query 
+    * @param endTime - End timestamp for query
 
 */
 export async function getDepositsInfoDays(startTimestamp, endTime)
@@ -392,6 +394,8 @@ export async function getDepositsInfoDays(startTimestamp, endTime)
 /**
 
     * @dev : Get deposits (hours)
+    * @param startTimestamp - Start timestamp for query 
+    * @param endTime - End timestamp for query
 
 */
 export async function getDepositsInfoHours(startTimestamp)
@@ -923,7 +927,13 @@ export async function getDepositsInfoHours(startTimestamp)
         console.log(err)
     }
 }
+/**
 
+    * @dev : Get deposits (N hours)
+    * @param startTimestamp - Start timestamp for query 
+    * @param endTime - End timestamp for query
+
+*/
 export async function getDepositsInfoNHours(startTimestamp, endTime, hours)
 {
     let depositQuery = `
@@ -1457,6 +1467,8 @@ export async function getDepositsInfoNHours(startTimestamp, endTime, hours)
 /**
 
     * @dev : Get deposits (minutes)
+    * @param startTimestamp - Start timestamp for query 
+    * @param endTime - End timestamp for query
 
 */
 export async function getDepositsInfoMinutes(startTimestamp, endTime)
