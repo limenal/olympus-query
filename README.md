@@ -12,7 +12,7 @@
 ## getStakesInfoNHour() / getDepositsInfoNHours() functions
 
     Note that functions for N minutes or N days can also be implemented. After fetching data we need to iterate all time intervals like that:
-    ```javascript
+    
     for(let beginTimestamp = startTimestamp, endTimestamp = startTimestamp + N * timeInterval; beginTimestamp < endTime; beginTimestamp += N*timeInterval, endTimestamp+= N * timeInterval)
     {
       
