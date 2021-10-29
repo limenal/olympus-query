@@ -363,6 +363,7 @@ export async function getStakesInfoHour(startTimestamp, endTime)
     * @dev : Get stakes (N hours)
     * @param startTimestamp - Start timestamp for query 
     * @param endTime - End timestamp for query
+    * @param hours - Number of hours
 
 */
 export async function getStakesInfoNHour(startTimestamp, endTime, hours)

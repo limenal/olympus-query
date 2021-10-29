@@ -932,7 +932,7 @@ export async function getDepositsInfoHours(startTimestamp)
     * @dev : Get deposits (N hours)
     * @param startTimestamp - Start timestamp for query 
     * @param endTime - End timestamp for query
-
+    * @param hours - Number of hours
 */
 export async function getDepositsInfoNHours(startTimestamp, endTime, hours)
 {
