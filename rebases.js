@@ -27,7 +27,7 @@ export async function getRebasesInfoDays(startTimestamp, endTime)
     try
     {
       const rebaseData = await axios({
-          url: 'https://api.thegraph.com/subgraphs/name/limenal/olympus-stake',
+          url: 'https://api.thegraph.com/subgraphs/id/QmVknJSJUdQEALEBciLHGoaTBQB6ndAxMViKcsjQAjSmne',
           method: 'post',
           data: {
             query: rebaseQuery
@@ -43,16 +43,16 @@ export async function getRebasesInfoDays(startTimestamp, endTime)
           let obj = {}
           obj.percentage = rebasesData[k].dayRebase[i].percentage
           let apy = Math.pow((1 + Number(rebasesData[k].dayRebase[i].percentage)), 1095)
-          if(apy > 100000)
+          if(apy > 1000)
           {
-            if(lastApy != 0)
-            {
-              obj.apy = lastApy
-            }
+            
+            obj.apy = lastApy
+            
           }
           else
           {
             obj.apy = apy
+            lastApy = apy
           }
           obj.timestamp = rebasesData[k].dayRebase[i].timestamp
           data.push(obj)
