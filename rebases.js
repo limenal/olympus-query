@@ -84,6 +84,87 @@ export async function getRebasesInfoDays(startTimestamp, endTime)
     }
 }
 
+export async function getRebasesInfoNDays(startTimestamp, endTime, days)
+{
+    
+    let rebaseQuery = `
+
+    {
+        rebaseYears(first: 3){
+          dayRebase(first:365 orderBy:timestamp where:{timestamp_gte: ${startTimestamp}, timestamp_lt:${endTime} }){
+            percentage
+            id
+            timestamp
+          }
+        }
+      }
+      
+    `
+    try
+    {
+      const rebaseData = await axios({
+          url: 'https://api.thegraph.com/subgraphs/id/QmVknJSJUdQEALEBciLHGoaTBQB6ndAxMViKcsjQAjSmne',
+          method: 'post',
+          data: {
+            query: rebaseQuery
+          }
+      }) 
+      const rebasesData = rebaseData.data.data.rebaseYears
+      let data = []
+      let resData = []
+      for(let k = 0; k < rebasesData.length; ++k)
+      {
+        for(let i = 0; i < rebasesData[k].dayRebase.length; ++i)
+        {
+          
+            let obj = {}
+            obj.percentage = rebasesData[k].dayRebase[i].percentage
+            obj.timestamp = rebasesData[k].dayRebase[i].timestamp
+            data.push(obj)  
+          
+        }
+      }
+      let prevPercentage = 0
+      let prevApy = 0
+      for(let beginTimestamp = startTimestamp, endTimestamp = startTimestamp + days*86400; beginTimestamp < endTime; beginTimestamp += days*86400, endTimestamp+= days*86400)
+      {
+        let rebasesCount = 0 
+        let percentageSum = 0
+
+        let obj = {
+          beginTimestamp: beginTimestamp,
+          endTimestamp: endTimestamp,
+          percentage: prevPercentage,
+          apy: prevApy,
+        }
+        for(let j = 0; j < data.length; ++j)
+        {
+          if(beginTimestamp <= data[j].timestamp && data[j].timestamp < endTimestamp)
+          {
+            rebasesCount++
+            percentageSum += data[j].percentage
+          }
+        }
+        let apy = Math.pow((1 + (Number(percentageSum)/rebasesCount)), 1095)
+        if(apy < 1000)
+        {
+          obj.apy = apy
+          obj.percentage = Number(percentageSum)/rebasesCount
+          prevPercentage = Number(percentageSum)/rebasesCount
+          prevApy = apy
+        }
+
+        resData.push(obj)
+      }      
+      return resData
+    }
+    catch(err)
+    {
+      console.log(err)
+    }
+}
+
+
 export async function getRebasesInfoHours(startTimestamp, endTime)
 {
     
